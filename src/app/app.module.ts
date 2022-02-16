@@ -10,6 +10,8 @@ import zh from '@angular/common/locales/zh';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from "./shared/shared.module";
+import { CoreModule } from "./core/core.module";
 
 registerLocaleData(zh);
 
@@ -22,7 +24,9 @@ registerLocaleData(zh);
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CoreModule,
+    SharedModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
