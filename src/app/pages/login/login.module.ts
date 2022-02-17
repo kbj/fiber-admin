@@ -1,22 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login.component';
-import {RouterModule, Routes} from "@angular/router";
-import { LoginPanelComponent } from './login-panel/login-panel.component';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { LoginComponent } from './login.component'
+import { RouterModule, Routes } from '@angular/router'
+import { LoginPanelComponent } from './login-panel/login-panel.component'
+import { SharedModule } from '../../shared/shared.module'
 
 // login模块的路由定义
-const loginRoutes: Routes = [
-  { path: '', component: LoginComponent }
-]
+const loginRoutes: Routes = [{ path: '', component: LoginComponent }]
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    LoginPanelComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(loginRoutes)
-  ]
+  declarations: [LoginComponent, LoginPanelComponent],
+  imports: [CommonModule, SharedModule, RouterModule.forChild(loginRoutes)]
 })
-export class LoginModule { }
+export class LoginModule {}

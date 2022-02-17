@@ -1,3 +1,24 @@
 <div class="login-panel">
   <h1 class="title">后台管理系统</h1>
+  <nz-tabset nzCentered>
+    <nz-tab [nzTitle]="accountTemplate">
+      <ng-template #accountTemplate>
+        <i nz-icon nzType="user" nzTheme="outline"></i>
+        账户密码登录
+      </ng-template>
+
+      <!-- 标签内容 -->
+      账户密码登录
+    </nz-tab>
+
+    <nz-tab [nzTitle]="phoneTemplate">
+      <ng-template #phoneTemplate>
+        <i nz-icon nzType="mobile" nzTheme="outline"></i>
+        手机号登录
+      </ng-template>
+
+      <!-- 手机号内容 -->
+      手机号登录
+    </nz-tab>
+  </nz-tabset>
 </div>
