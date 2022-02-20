@@ -1,7 +1,7 @@
 import { IconDefinition } from '@ant-design/icons-angular'
-import { UserOutline, MobileOutline } from '@ant-design/icons-angular/icons'
+import { UserOutline, MobileOutline, LockOutline } from '@ant-design/icons-angular/icons'
 
 /**
  * 图标的静态导入
  */
-export const ZorroIcons: IconDefinition[] = [UserOutline, MobileOutline]
+export const ZorroIcons: IconDefinition[] = [UserOutline, MobileOutline, LockOutline]
