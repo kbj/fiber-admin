@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gofiber-admin": {
+    "fiber-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/gofiber-admin",
+            "outputPath": "dist/fiber-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "gofiber-admin:build:production"
+              "browserTarget": "fiber-admin:build:production"
             },
             "development": {
-              "browserTarget": "gofiber-admin:build:development"
+              "browserTarget": "fiber-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gofiber-admin:build"
+            "browserTarget": "fiber-admin:build"
           }
         },
         "test": {
@@ -108,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "gofiber-admin"
+  "defaultProject": "fiber-admin"
 }
