@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core'
 import { LoginAccount } from '../model/login-account'
 import { NgForm } from '@angular/forms'
-import validateUtils from '../../../utils/validate-util'
+import validateUtils from '@utils/validate.util'
+import { LoginService } from '@services/login/login.service'
 
 @Component({
   selector: 'app-login-account',
@@ -16,7 +17,7 @@ export class LoginAccountComponent implements AfterViewInit {
   // 视图是否已经初始化完毕
   private isInit: boolean = false
 
-  constructor() {
+  constructor(private loginService: LoginService) {
     this.loginAccount = new LoginAccount()
   }
 
@@ -37,5 +38,7 @@ export class LoginAccountComponent implements AfterViewInit {
     }
     // 赋值进实体
     this.loginAccount.rememberMe = rememberMe
+    // 调用服务去访问登录接口
+    this.loginService.accountLogin(this.loginAccount)
   }
 }

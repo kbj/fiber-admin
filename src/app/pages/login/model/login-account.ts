@@ -1,3 +1,3 @@
 export class LoginAccount {
-  constructor(public userName: string = '', public password: string = '', public rememberMe: boolean = false) {}
+  constructor(public name: string = '', public password: string = '', public rememberMe: boolean = false) {}
 }

@@ -6,6 +6,7 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -23,12 +24,30 @@
       "dom"
     ],
     "paths": {
-      "@shared": [ "app/shared" ],
-      "@shared/*": [ "app/shared/*" ],
-      "@app": [ "app" ],
-      "@app/*": [ "app/*" ],
-      "@assets": [ "assets" ],
-      "@assets/*": [ "assets/*" ]
+      "@app": [
+        "app"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@store/*": [
+        "src/app/core/services/store/*"
+      ],
+      "@utils/*": [
+        "src/app/utils/*"
+      ],
+      "@services/*": [
+        "src/app/core/services/*"
+      ],
+      "@pages/*": [
+        "src/app/pages/*"
+      ],
+      "@layout/*": [
+        "src/app/layout/*"
+      ]
     }
   },
   "angularCompilerOptions": {

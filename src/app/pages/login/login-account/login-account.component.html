@@ -1,19 +1,35 @@
 <div class="login-account">
-  <form nz-form class="login-form" #loginForm="ngForm">
+  <form #loginForm="ngForm" class="login-form" nz-form>
     <nz-form-item>
-      <nz-form-control nzHasFeedback nzErrorTip="请输入3-18位用户名！">
+      <nz-form-control nzErrorTip="请输入3-18位用户名！" nzHasFeedback>
         <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input placeholder="请输入用户名" name="userName" minlength="3" maxlength="18" required
-                 [(ngModel)]="loginAccount.userName"/>
+          <input
+            [(ngModel)]="loginAccount.name"
+            maxlength="18"
+            minlength="3"
+            name="name"
+            nz-input
+            placeholder="请输入用户名"
+            required
+            type="text"
+          />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzHasFeedback nzErrorTip="请输入6-32位密码！">
+      <nz-form-control nzErrorTip="请输入6-32位密码！" nzHasFeedback>
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input placeholder="请输入密码" name="password" minlength="6" maxlength="32" required
-                 [(ngModel)]="loginAccount.password"/>
+          <input
+            [(ngModel)]="loginAccount.password"
+            maxlength="32"
+            minlength="6"
+            name="password"
+            nz-input
+            placeholder="请输入密码"
+            required
+            type="password"
+          />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
