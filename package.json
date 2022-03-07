@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
     "ng-zorro-antd": "^13.0.1",
+    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

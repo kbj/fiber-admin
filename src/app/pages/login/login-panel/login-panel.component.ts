@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core'
 import { LoginAccountComponent } from '../login-account/login-account.component'
 
 @Component({
   selector: 'app-login-panel',
   templateUrl: './login-panel.component.html',
-  styleUrls: ['./login-panel.component.less']
+  styleUrls: ['./login-panel.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPanelComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-
+  // 是否记住账号
+  rememberMe: boolean = false
   @ViewChild(LoginAccountComponent)
   private loginAccountComponent!: LoginAccountComponent
 
-  // 是否记住账号
-  rememberMe: boolean = false
+  constructor() {}
+
+  ngOnInit(): void {}
 
   // 点击登录的点击事件方法
   handleLoginClick() {

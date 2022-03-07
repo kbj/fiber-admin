@@ -47,6 +47,9 @@
       ],
       "@layout/*": [
         "src/app/layout/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
       ]
     }
   },

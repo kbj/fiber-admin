@@ -1,0 +1,47 @@
+<div class="nav-menu">
+  <!--logo部分-->
+  <div class="logo">
+    <img
+      [@collapseAnimation]="(isCollapse.asObservable() | async) ? 'close' : 'open'"
+      alt="logo"
+      class="img"
+      src="assets/img/logo.svg"
+    />
+    <span *ngIf="!(isCollapse.asObservable() | async)" class="title">Vue3+TS</span>
+  </div>
+
+  <!--菜单部分-->
+  <ul
+    [nzInlineCollapsed]="isCollapse.asObservable() | async"
+    [nzMode]="(isCollapse | async) ? 'vertical' : 'inline'"
+    nz-menu
+    nzTheme="dark"
+  >
+    <!--$implicit表示指定的默认值-->
+    <ng-container *ngTemplateOutlet="menuRef; context: { $implicit: menus }"></ng-container>
+    <!--  let- 表示把上方的上下文传到这个变量里面  -->
+    <ng-template #menuRef let-menus>
+      <ng-container *ngFor="let menu of menus">
+        <!--如果有children字段表示是有子菜单-->
+        <li
+          *ngIf="menu.children; else menuItem"
+          [nzIcon]="menu.icon"
+          [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24"
+          [nzTitle]="menu.name"
+          nz-submenu
+        >
+          <ul>
+            <ng-container *ngTemplateOutlet="menuRef; context: { $implicit: menu.children }"></ng-container>
+          </ul>
+        </li>
+        <!--最低级菜单-->
+        <ng-template #menuItem>
+          <li [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24" nz-menu-item>
+            <i *ngIf="menu.icon" [nzType]="menu.icon" nz-icon></i>
+            <span>{{ menu.name }}</span>
+          </li>
+        </ng-template>
+      </ng-container>
+    </ng-template>
+  </ul>
+</div>

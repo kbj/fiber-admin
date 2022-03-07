@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core'
-import {CommonModule} from '@angular/common'
 import {LoginComponent} from './login.component'
 import {RouterModule, Routes} from '@angular/router'
 import {LoginPanelComponent} from './login-panel/login-panel.component'
@@ -12,6 +11,6 @@ const loginRoutes: Routes = [{ path: '', component: LoginComponent }]
 
 @NgModule({
   declarations: [LoginComponent, LoginPanelComponent, LoginAccountComponent, LoginPhoneComponent],
-  imports: [CommonModule, SharedModule, RouterModule.forChild(loginRoutes)]
+  imports: [SharedModule, RouterModule.forChild(loginRoutes)]
 })
 export class LoginModule {}

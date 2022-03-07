@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core'
-import { LoginAccount } from '../model/login-account'
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild } from '@angular/core'
+import LoginAccount from '../model/login-account'
 import { NgForm } from '@angular/forms'
 import validateUtils from '@utils/validate.util'
 import { LoginService } from '@services/login/login.service'
@@ -7,7 +7,8 @@ import { LoginService } from '@services/login/login.service'
 @Component({
   selector: 'app-login-account',
   templateUrl: './login-account.component.html',
-  styleUrls: ['./login-account.component.less']
+  styleUrls: ['./login-account.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginAccountComponent implements AfterViewInit {
   // 登录表单的实体
