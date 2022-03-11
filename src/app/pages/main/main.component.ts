@@ -8,14 +8,18 @@ import { OthersService } from '@store/others.service'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
-  isCollapse = this.othersService.globalCollapse
+  isCollapse = false
+  private globalCollapse = this.othersService.globalCollapse
 
   constructor(private othersService: OthersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // 监听收缩与否的状态改变
+    this.globalCollapse.asObservable().subscribe((a) => (this.isCollapse = a))
+  }
 
   // 收缩伸展事件绑定当前状态
-  collapseSize(isCollapse: boolean) {
-    this.isCollapse.next(isCollapse)
+  collapseSize(value: boolean) {
+    this.globalCollapse.next(value)
   }
 }

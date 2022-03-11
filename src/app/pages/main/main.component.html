@@ -1,13 +1,25 @@
 <div class="main">
   <nz-layout>
     <!--左侧菜单-->
-    <nz-sider (nzCollapsedChange)="collapseSize($event)" [nzCollapsedWidth]="48" nzBreakpoint="lg" nzCollapsible>
+    <nz-sider
+      (nzCollapsedChange)="collapseSize($event)"
+      [class]="{ showMobile: isCollapse }"
+      [nzCollapsedWidth]="48"
+      [nzCollapsed]="isCollapse"
+      [nzTrigger]="null"
+      nzBreakpoint="lg"
+      nzCollapsible
+    >
       <app-nav-menu></app-nav-menu>
     </nz-sider>
 
     <!--右侧内容-->
     <nz-layout>
-      <nz-header></nz-header>
+      <!--header部分-->
+      <nz-header>
+        <app-nav-header></app-nav-header>
+      </nz-header>
+
       <ng-content></ng-content>
       <nz-footer>Ant Design ©2022 Implement By Angular</nz-footer>
     </nz-layout>

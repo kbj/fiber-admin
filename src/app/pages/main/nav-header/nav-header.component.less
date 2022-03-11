@@ -1,0 +1,31 @@
+@import '~src/styles/constant';
+
+@header-padding-left-right: 1rem;
+
+.nav-header {
+  height: @layout-header-height;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  .fold-menu {
+    cursor: pointer;
+    font-size: 1.8rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: @layout-header-padding @header-padding-left-right;
+  }
+
+  .fold-menu:hover {
+    background-color: rgb(249, 249, 249);
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    padding: @layout-header-padding @header-padding-left-right;
+  }
+}

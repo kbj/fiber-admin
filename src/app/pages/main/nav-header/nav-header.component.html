@@ -1,0 +1,12 @@
+<div class="nav-header">
+  <!--显示收缩按钮-->
+  <div (click)="changeCollapse()" class="fold-menu">
+    <i [nzType]="(isCollapse.asObservable() | async) ? 'menu-unfold' : 'menu-fold'" nz-icon nzTheme="outline"></i>
+  </div>
+
+  <!--面包屑和右侧的用户信息-->
+  <div class="content">
+    <div>面包屑</div>
+    <app-toolbar></app-toolbar>
+  </div>
+</div>
