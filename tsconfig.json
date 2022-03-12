@@ -50,6 +50,9 @@
       ],
       "@core/*": [
         "src/app/core/*"
+      ],
+      "@models/*": [
+        "src/app/shared/models/*"
       ]
     }
   },

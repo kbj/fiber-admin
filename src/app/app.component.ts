@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { OthersService } from '@store/others.service'
+import { OthersStoreService } from '@store/others-store.service'
 import { NavigationEnd, Router } from '@angular/router'
 import { NzSafeAny } from 'ng-zorro-antd/core/types'
 import { filter } from 'rxjs'
@@ -20,16 +20,16 @@ import { filter } from 'rxjs'
   `
 })
 export class AppComponent implements OnInit {
-  loading$ = this.othersService.globalSpin.asObservable()
+  loading$ = this.othersStore.globalSpin.asObservable()
 
-  constructor(private othersService: OthersService, private router: Router) {}
+  constructor(private othersStore: OthersStoreService, private router: Router) {}
 
   ngOnInit(): void {
     // 当路由页面检测到离开的时候需要把全局加载弹框设置为false
     this.router.events
       .pipe(filter((event: NzSafeAny) => event instanceof NavigationEnd))
       .subscribe((event: NzSafeAny) => {
-        this.othersService.globalSpin.next(false)
+        this.othersStore.globalSpin.next(false)
       })
   }
 }

@@ -8,7 +8,7 @@ class LocalCache {
   }
 
   // 获取缓存
-  getCache(key: string): unknown {
+  getCache<T>(key: string): T | undefined {
     const value = window.localStorage.getItem(key)
     if (value) {
       return JSON.parse(value)

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { OthersService } from '@store/others.service'
+import { OthersStoreService } from '@store/others-store.service'
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { MenuModel } from '../../../shared/models/menu.model'
+import { MenuModel } from '@models/menu.model'
 
 @Component({
   selector: 'app-nav-menu',
@@ -29,7 +29,7 @@ import { MenuModel } from '../../../shared/models/menu.model'
 })
 export class NavMenuComponent implements OnInit {
   // 是否处于隐藏或者展开状态
-  isCollapse = this.othersService.globalCollapse
+  isCollapse = this.othersStore.globalCollapse
   menus: MenuModel[] = [
     {
       name: '首页',
@@ -56,7 +56,7 @@ export class NavMenuComponent implements OnInit {
     }
   ]
 
-  constructor(private othersService: OthersService) {}
+  constructor(private othersStore: OthersStoreService) {}
 
   ngOnInit(): void {}
 }

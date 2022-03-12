@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { OthersService } from '@store/others.service'
+import { OthersStoreService } from '@store/others-store.service'
 
 @Component({
   selector: 'app-nav-header',
@@ -9,9 +9,9 @@ import { OthersService } from '@store/others.service'
 })
 export class NavHeaderComponent implements OnInit {
   // 是否折叠的状态
-  isCollapse = this.othersService.globalCollapse
+  isCollapse = this.othersStore.globalCollapse
 
-  constructor(private othersService: OthersService) {}
+  constructor(private othersStore: OthersStoreService) {}
 
   ngOnInit(): void {}
 

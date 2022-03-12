@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { UserStoreService } from '@store/user-store.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -7,10 +8,16 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolbarComponent implements OnInit {
+  // 页面右上角字母
+  userName: string = ''
 
-  constructor() { }
+  constructor(private userStore: UserStoreService) {}
 
   ngOnInit(): void {
+    this.userStore.userInfo.subscribe((info) => {
+      if (info) {
+        this.userName = info.name.trim()
+      }
+    })
   }
-
 }

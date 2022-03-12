@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs'
 @Injectable({
   providedIn: 'root'
 })
-export class OthersService {
+export class OthersStoreService {
   constructor() {}
 
   // 控制展示全局加载框

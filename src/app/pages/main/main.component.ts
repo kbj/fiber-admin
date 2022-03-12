@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { OthersService } from '@store/others.service'
+import { OthersStoreService } from '@store/others-store.service'
 
 @Component({
   selector: 'app-main',
@@ -11,7 +11,7 @@ export class MainComponent implements OnInit {
   isCollapse = false
   private globalCollapse = this.othersService.globalCollapse
 
-  constructor(private othersService: OthersService) {}
+  constructor(private othersService: OthersStoreService) {}
 
   ngOnInit(): void {
     // 监听收缩与否的状态改变

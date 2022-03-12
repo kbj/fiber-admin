@@ -8,6 +8,7 @@ import {NzSpinModule} from 'ng-zorro-antd/spin'
 import {NzLayoutModule} from 'ng-zorro-antd/layout'
 import {NzMenuModule} from 'ng-zorro-antd/menu'
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb'
+import {NzAvatarModule} from 'ng-zorro-antd/avatar'
 
 /**
  * 提供统一的ng-zorro组件引入
@@ -22,5 +23,6 @@ export const ZorroModules = [
   NzSpinModule,
   NzLayoutModule,
   NzMenuModule,
-  NzBreadCrumbModule
+  NzBreadCrumbModule,
+  NzAvatarModule
 ]
