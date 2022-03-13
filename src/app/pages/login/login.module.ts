@@ -7,7 +7,12 @@ import {LoginAccountComponent} from './login-account/login-account.component'
 import {LoginPhoneComponent} from './login-phone/login-phone.component'
 
 // login模块的路由定义
-const loginRoutes: Routes = [{ path: '', component: LoginComponent }]
+const loginRoutes: Routes = [
+  {
+    path: '',
+    component: LoginComponent
+  }
+]
 
 @NgModule({
   declarations: [LoginComponent, LoginPanelComponent, LoginAccountComponent, LoginPhoneComponent],

@@ -35,7 +35,7 @@ export class NavMenuComponent implements OnInit {
       name: '首页',
       icon: 'home',
       level: 1,
-      path: '/main/index'
+      path: '/dashboard'
     },
     {
       name: '系统管理',
@@ -45,12 +45,14 @@ export class NavMenuComponent implements OnInit {
         {
           name: '用户管理',
           level: 2,
-          icon: 'user'
+          icon: 'user',
+          path: '/login'
         },
         {
           name: '角色管理',
           level: 2,
-          icon: 'user'
+          icon: 'user',
+          path: '/system/role'
         }
       ]
     }

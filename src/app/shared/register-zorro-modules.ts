@@ -9,6 +9,7 @@ import {NzLayoutModule} from 'ng-zorro-antd/layout'
 import {NzMenuModule} from 'ng-zorro-antd/menu'
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb'
 import {NzAvatarModule} from 'ng-zorro-antd/avatar'
+import {NzCardModule} from 'ng-zorro-antd/card'
 
 /**
  * 提供统一的ng-zorro组件引入
@@ -24,5 +25,6 @@ export const ZorroModules = [
   NzLayoutModule,
   NzMenuModule,
   NzBreadCrumbModule,
-  NzAvatarModule
+  NzAvatarModule,
+  NzCardModule
 ]

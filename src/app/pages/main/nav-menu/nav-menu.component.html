@@ -36,9 +36,11 @@
         </li>
         <!--最低级菜单-->
         <ng-template #menuItem>
-          <li [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24" nz-menu-item>
+          <li [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24" nz-menu-item nzMatchRouter>
             <i *ngIf="menu.icon" [nzType]="menu.icon" nz-icon></i>
-            <span>{{ menu.name }}</span>
+            <span>
+              <a [routerLink]="'/main' + menu.path">{{ menu.name }}</a>
+            </span>
           </li>
         </ng-template>
       </ng-container>

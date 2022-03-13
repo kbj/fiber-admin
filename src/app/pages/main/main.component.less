@@ -1,18 +1,22 @@
 @import '~src/styles/constant';
 
-.showMobile {
-  @media (max-width: @layout-hide-nav-width) {
-    display: none;
+.main {
+  min-width: @layout-hide-nav-width;
+
+  .showMobile {
+    @media (max-width: @layout-hide-nav-width) {
+      display: none;
+    }
   }
-}
 
-nz-header {
-  background: white;
-  height: @layout-header-height;
-  padding: 0;
-  z-index: 10;
-}
+  nz-header {
+    background: white;
+    height: @layout-header-height;
+    padding: 0;
+    z-index: 10;
+  }
 
-nz-footer {
-  text-align: center;
+  nz-footer {
+    text-align: center;
+  }
 }

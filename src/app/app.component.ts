@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { OthersStoreService } from '@store/others-store.service'
-import { NavigationEnd, Router } from '@angular/router'
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router'
 import { NzSafeAny } from 'ng-zorro-antd/core/types'
-import { filter } from 'rxjs'
+import nProgress from 'nprogress'
 
 @Component({
   selector: 'app-root',
@@ -22,14 +22,28 @@ import { filter } from 'rxjs'
 export class AppComponent implements OnInit {
   loading$ = this.othersStore.globalSpin.asObservable()
 
-  constructor(private othersStore: OthersStoreService, private router: Router) {}
+  constructor(private othersStore: OthersStoreService, private router: Router) {
+    this.router.events.subscribe((event: NzSafeAny) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          // 开始显示路由加载进度条
+          nProgress.start()
+          break
+        }
 
-  ngOnInit(): void {
-    // 当路由页面检测到离开的时候需要把全局加载弹框设置为false
-    this.router.events
-      .pipe(filter((event: NzSafeAny) => event instanceof NavigationEnd))
-      .subscribe((event: NzSafeAny) => {
-        this.othersStore.globalSpin.next(false)
-      })
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          // 隐藏路由加载进度条
+          nProgress.done()
+
+          // 当路由页面检测到离开的时候需要把全局加载弹框设置为false
+          this.othersStore.globalSpin.next(false)
+          break
+        }
+      }
+    })
   }
+
+  ngOnInit(): void {}
 }
