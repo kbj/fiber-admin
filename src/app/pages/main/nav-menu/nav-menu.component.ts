@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { OthersStoreService } from '@store/others-store.service'
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { MenuModel } from '@models/menu.model'
+import { UserStoreService } from '@store/user-store.service'
 
 @Component({
   selector: 'app-nav-menu',
@@ -30,35 +30,10 @@ import { MenuModel } from '@models/menu.model'
 export class NavMenuComponent implements OnInit {
   // 是否处于隐藏或者展开状态
   isCollapse = this.othersStore.globalCollapse
-  menus: MenuModel[] = [
-    {
-      name: '首页',
-      icon: 'home',
-      level: 1,
-      path: '/dashboard'
-    },
-    {
-      name: '系统管理',
-      icon: 'team',
-      level: 1,
-      children: [
-        {
-          name: '用户管理',
-          level: 2,
-          icon: 'user',
-          path: '/login'
-        },
-        {
-          name: '角色管理',
-          level: 2,
-          icon: 'user',
-          path: '/system/role'
-        }
-      ]
-    }
-  ]
+  // 菜单列表
+  menuTreeList = this.userStore.menuTreeList
 
-  constructor(private othersStore: OthersStoreService) {}
+  constructor(private othersStore: OthersStoreService, private userStore: UserStoreService) {}
 
   ngOnInit(): void {}
 }

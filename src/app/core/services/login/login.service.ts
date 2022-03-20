@@ -35,11 +35,14 @@ export class LoginService {
       .subscribe((resp) => {
         // 登录成功
         this.message.success(`欢迎您！${resp.data.name}`)
+
         // 保存用户名和token
         this.userStore.userInfo.next(resp.data)
         this.userStore.token.next(resp.data.token)
         localCache.setCache(Constant.LocalStorageAuthorizationKey, resp.data.token)
         localCache.setCache(Constant.LocalStorageUserInfoKey, resp.data)
+
+        // 跳转
         this.router.navigate(['main'])
       })
   }

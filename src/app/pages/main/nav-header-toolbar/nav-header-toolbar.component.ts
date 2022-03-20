@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { UserStoreService } from '@store/user-store.service'
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.less'],
+  selector: 'app-nav-header-toolbar',
+  templateUrl: './nav-header-toolbar.component.html',
+  styleUrls: ['./nav-header-toolbar.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToolbarComponent implements OnInit {
+export class NavHeaderToolbarComponent implements OnInit {
   // 页面右上角字母
   userName: string = ''
 

@@ -2,15 +2,17 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {environment} from '../../../environments/environment'
-import localCache from '@utils/cache.util'
-import Constant from '../config/constant.config'
+import {UserStoreService} from "@store/user-store.service";
 
 /**
  * 为每个HTTP请求添加基础请求地址的拦截器
  */
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(
+    private userStore: UserStoreService
+  ) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let baseUrl
@@ -23,17 +25,11 @@ export class RequestInterceptor implements HttpInterceptor {
       baseUrl = 'http://127.0.0.1:8081/'
     }
 
-    // 获取保存的请求头
-    let authorization = localCache.getCache(Constant.LocalStorageAuthorizationKey)
-    if (!authorization) {
-      authorization = ''
-    }
-
     const newReq = req.clone({
       // 添加baseUrl
       url: baseUrl + req.url,
       // 添加请求头
-      headers: req.headers.set('Authorization', authorization + '')
+      headers: req.headers.set('Authorization', 'Bearer ' + this.userStore.token.getValue())
     })
 
     return next.handle(newReq)

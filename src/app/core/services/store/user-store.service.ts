@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core'
 import {BehaviorSubject} from 'rxjs'
 import {UserInfo} from '@models/user.model'
+import {MenuTreeModel} from '@models/menu.model'
 
 /**
  * 用户相关的存储
@@ -10,6 +11,17 @@ import {UserInfo} from '@models/user.model'
 })
 export class UserStoreService {
   constructor() {}
+
+  // 用户菜单列表
+  private _menuTreeList = new BehaviorSubject<MenuTreeModel[]>([])
+
+  get menuTreeList(): BehaviorSubject<MenuTreeModel[]> {
+    return this._menuTreeList
+  }
+
+  set menuTreeList(value: BehaviorSubject<MenuTreeModel[]>) {
+    this._menuTreeList = value
+  }
 
   // 用户的相关信息
   private _userInfo = new BehaviorSubject<UserInfo | undefined>(undefined)

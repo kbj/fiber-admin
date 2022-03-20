@@ -1,1 +1,19 @@
-<p>nav-tab works!</p>
+<div class="nav-tab">
+  <nz-card [nzBodyStyle]="{ padding: 0 }" [nzBordered]="false" style="height: 3.5rem">
+    <nz-tabset
+      (nzClose)="closeTabEvent($event)"
+      [nzHideAdd]="true"
+      [nzSelectedIndex]="currentTabIndex"
+      [nzTabBarGutter]="1"
+      [nzTabBarStyle]="{ height: '3.5rem' }"
+      [nzType]="'editable-card'"
+    >
+      <nz-tab
+        (nzClick)="goToPage(tab)"
+        *ngFor="let tab of tabList; let i = index; trackBy: trackByTab"
+        [nzClosable]="i != 0"
+        [nzTitle]="tab.name"
+      ></nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>

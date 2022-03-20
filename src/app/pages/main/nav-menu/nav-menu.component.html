@@ -18,7 +18,9 @@
     nzTheme="dark"
   >
     <!--$implicit表示指定的默认值-->
-    <ng-container *ngTemplateOutlet="menuRef; context: { $implicit: menus }"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="menuRef; context: { $implicit: menuTreeList.asObservable() | async }"
+    ></ng-container>
     <!--  let- 表示把上方的上下文传到这个变量里面  -->
     <ng-template #menuRef let-menus>
       <ng-container *ngFor="let menu of menus">
@@ -36,7 +38,12 @@
         </li>
         <!--最低级菜单-->
         <ng-template #menuItem>
-          <li [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24" nz-menu-item nzMatchRouter>
+          <li
+            *ngIf="menu.type == 1"
+            [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24"
+            nz-menu-item
+            nzMatchRouter
+          >
             <i *ngIf="menu.icon" [nzType]="menu.icon" nz-icon></i>
             <span>
               <a [routerLink]="'/main' + menu.path">{{ menu.name }}</a>
