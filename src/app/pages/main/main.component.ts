@@ -4,10 +4,9 @@ import { fadeRouteAnimation } from '../../animations/fade.animation'
 import { RouterOutlet } from '@angular/router'
 import { takeUntil } from 'rxjs'
 import { DestroyService } from '@services/common/destroy.service'
-import { ResponseModel } from '@models/response.model'
-import { MenuTreeModel } from '@models/menu.model'
 import { HttpClient } from '@angular/common/http'
 import { UserStoreService } from '@store/user-store.service'
+import { LoginService } from '@services/login/login.service'
 
 @Component({
   selector: 'app-main',
@@ -23,6 +22,7 @@ export class MainComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    private loginService: LoginService,
     private userStore: UserStoreService,
     private othersStore: OthersStoreService,
     private destroy: DestroyService
@@ -36,23 +36,12 @@ export class MainComponent implements OnInit {
       .subscribe((a) => (this.isCollapse = a))
 
     // 请求菜单
-    this.requestMenuTree()
+    this.loginService.getMenuTreeList()
   }
 
   // 收缩伸展事件绑定当前状态
   collapseSize(value: boolean) {
     this.globalCollapse.next(value)
-  }
-
-  // 请求获取菜单树列表
-  requestMenuTree() {
-    this.http
-      .get<ResponseModel<MenuTreeModel[]>>('system/menu/tree-list')
-      .pipe(takeUntil(this.destroy))
-      .subscribe((menuResp) => {
-        const menus = menuResp.data
-        this.userStore.menuTreeList.next(menus)
-      })
   }
 
   // 加载路由

@@ -12,7 +12,7 @@ import {MenuTreeModel} from '@models/menu.model'
 export class UserStoreService {
   constructor() {}
 
-  // 用户菜单列表
+  // 用户菜单树列表
   private _menuTreeList = new BehaviorSubject<MenuTreeModel[]>([])
 
   get menuTreeList(): BehaviorSubject<MenuTreeModel[]> {
@@ -21,6 +21,17 @@ export class UserStoreService {
 
   set menuTreeList(value: BehaviorSubject<MenuTreeModel[]>) {
     this._menuTreeList = value
+  }
+
+  // 用户菜单列表
+  private _flatMenuList = new BehaviorSubject<MenuTreeModel[]>([])
+
+  get flatMenuList(): BehaviorSubject<MenuTreeModel[]> {
+    return this._flatMenuList
+  }
+
+  set flatMenuList(value: BehaviorSubject<MenuTreeModel[]>) {
+    this._flatMenuList = value
   }
 
   // 用户的相关信息

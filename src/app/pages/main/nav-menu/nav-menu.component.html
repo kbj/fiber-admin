@@ -46,7 +46,7 @@
           >
             <i *ngIf="menu.icon" [nzType]="menu.icon" nz-icon></i>
             <span>
-              <a [routerLink]="'/main' + menu.path">{{ menu.name }}</a>
+              <a [routerLink]="menu.path">{{ menu.name }}</a>
             </span>
           </li>
         </ng-template>

@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { NavigationEnd, Router } from '@angular/router'
 import { DestroyService } from '@services/common/destroy.service'
 import { filter, takeUntil } from 'rxjs'
 import { NavTabService } from '@services/common/nav-tab.service'
 import { NavTabModel } from '@models/nav-tab.model'
+import { UserStoreService } from '@store/user-store.service'
 
 @Component({
   selector: 'app-nav-tab',
@@ -19,7 +20,7 @@ export class NavTabComponent implements OnInit {
     private router: Router,
     private destroy: DestroyService,
     private navTabService: NavTabService,
-    private activatedRoute: ActivatedRoute,
+    private userStore: UserStoreService,
     private cdr: ChangeDetectorRef
   ) {
     // 路由跳转成功后记录路由信息添加的路由标签页的数组中
@@ -32,10 +33,13 @@ export class NavTabComponent implements OnInit {
         const routeInfo = data as NavigationEnd
 
         // 添加到tab中
-        this.navTabService.addTab({
-          name: '首页',
-          path: routeInfo.url
-        })
+        const menu = this.userStore.flatMenuList.getValue().find((menu) => menu.path === routeInfo.url)
+        if (menu) {
+          this.navTabService.addTab({
+            name: menu.name,
+            path: routeInfo.url
+          })
+        }
 
         // 更新当前激活的tab索引值
         this.navTabService.updateTabIndex(routeInfo.url)
