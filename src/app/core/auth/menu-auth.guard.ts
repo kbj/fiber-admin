@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {ActivatedRouteSnapshot, CanActivateChild, RouterStateSnapshot, UrlTree} from '@angular/router'
+import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot, UrlTree} from '@angular/router'
 import {map, Observable} from 'rxjs'
 import {UserStoreService} from '@store/user-store.service'
 import {NzMessageService} from 'ng-zorro-antd/message'
@@ -13,9 +13,9 @@ import Constant from '@core/config/constant.config'
 })
 export class MenuAuthGuard implements CanActivateChild {
   // 不需要权限的地址
-  NOT_AUTH_MENU = ['/main', '/main/home']
+  NOT_AUTH_MENU = ['/main']
 
-  constructor(private userStore: UserStoreService, private messageService: NzMessageService) {}
+  constructor(private userStore: UserStoreService, private messageService: NzMessageService, private router: Router) {}
 
   canActivateChild(
     route: ActivatedRouteSnapshot,
@@ -32,6 +32,7 @@ export class MenuAuthGuard implements CanActivateChild {
       const result = !!menus.find((menu) => menu.path === state.url)
       if (!result) {
         this.messageService.error(Constant.MessageNotAuthentication)
+        return this.router.parseUrl('/main')
       }
       return result
     } else {
@@ -39,8 +40,8 @@ export class MenuAuthGuard implements CanActivateChild {
         map((mapMenu) => {
           const result = !!mapMenu.find((m) => m.path === state.url)
           if (!result) {
-            console.log(state.url, mapMenu)
             this.messageService.error(Constant.MessageNotAuthentication)
+            return this.router.parseUrl('/main')
           }
           return result
         })

@@ -57,8 +57,9 @@ export class LoginService {
   getMenuTreeList() {
     this.http.get<ResponseModel<MenuTreeModel[]>>('system/menu/tree-list').subscribe((resp) => {
       // 更新菜单树
-      this.userStore.menuTreeList.next(resp.data)
-      sessionCacheUtil.setCache(Constant.SessionStorageMenuTreeListKey, resp.data)
+      const treeList = resp.data ? resp.data : []
+      this.userStore.menuTreeList.next(treeList)
+      sessionCacheUtil.setCache(Constant.SessionStorageMenuTreeListKey, treeList)
 
       // 更新拍平的菜单列表
       const flatList = mapUtil.flatMenuTree(resp.data)

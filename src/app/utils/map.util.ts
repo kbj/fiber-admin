@@ -22,7 +22,7 @@ class MapUtil {
         flatLists.push(menu)
       }
     }
-    lists && _recursiveMenu(lists)
+    lists && lists.length > 0 && _recursiveMenu(lists)
 
     return flatLists
   }
