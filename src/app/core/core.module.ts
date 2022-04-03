@@ -4,6 +4,8 @@ import zh from '@angular/common/locales/zh'
 import {NZ_I18N, zh_CN} from 'ng-zorro-antd/i18n'
 import {NZ_CONFIG} from 'ng-zorro-antd/core/config'
 import {ngZorroConfig} from './config/ng-zorro.config'
+import {RouteReuseStrategy} from '@angular/router'
+import {ReuseStrategy} from '@services/common/reuse-strategy'
 
 // 设置成中文环境
 registerLocaleData(zh)
@@ -14,6 +16,7 @@ registerLocaleData(zh)
  */
 @NgModule({
   providers: [
+    { provide: RouteReuseStrategy, useClass: ReuseStrategy },
     { provide: NZ_I18N, useValue: zh_CN }, // 引入antd国际化相关配置
     { provide: NZ_CONFIG, useValue: ngZorroConfig } // 引入antd的全局配置
   ]

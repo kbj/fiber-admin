@@ -3,9 +3,9 @@
     <!--左侧菜单-->
     <nz-sider
       (nzCollapsedChange)="collapseSize($event)"
-      [class]="{ showMobile: isCollapse }"
+      [class]="{ showMobile: globalCollapse.asObservable() | async }"
       [nzCollapsedWidth]="48"
-      [nzCollapsed]="isCollapse"
+      [nzCollapsed]="globalCollapse.asObservable() | async"
       [nzTrigger]="null"
       nzBreakpoint="lg"
       nzCollapsible

@@ -11,12 +11,7 @@
   </div>
 
   <!--菜单部分-->
-  <ul
-    [nzInlineCollapsed]="isCollapse.asObservable() | async"
-    [nzMode]="(isCollapse | async) ? 'vertical' : 'inline'"
-    nz-menu
-    nzTheme="dark"
-  >
+  <ul [nzInlineCollapsed]="isCollapse.asObservable() | async" nz-menu nzMode="inline" nzTheme="dark">
     <!--$implicit表示指定的默认值-->
     <ng-container
       *ngTemplateOutlet="menuRef; context: { $implicit: menuTreeList.asObservable() | async }"

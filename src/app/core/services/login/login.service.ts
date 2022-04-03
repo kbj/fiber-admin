@@ -43,8 +43,13 @@ export class LoginService {
         // 保存用户名和token
         this.userStore.userInfo.next(resp.data)
         this.userStore.token.next(resp.data.token)
-        localCache.setCache(Constant.LocalStorageAuthorizationKey, resp.data.token)
-        localCache.setCache(Constant.LocalStorageUserInfoKey, resp.data)
+        if (loginAccount.rememberMe) {
+          localCache.setCache(Constant.LocalStorageAuthorizationKey, resp.data.token)
+          localCache.setCache(Constant.LocalStorageUserInfoKey, resp.data)
+        } else {
+          localCache.deleteCache(Constant.LocalStorageAuthorizationKey)
+          localCache.deleteCache(Constant.LocalStorageUserInfoKey)
+        }
 
         // 跳转
         this.router.navigate(['main'])

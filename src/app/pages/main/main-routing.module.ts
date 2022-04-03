@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { MainComponent } from '@pages/main/main.component'
 import { AuthGuard } from '@core/auth'
+import Constant from '@core/config/constant.config'
 
 const routes: Routes = [
   {
     path: '',
+    data: { [Constant.ComponentKey]: 'main' },
     component: MainComponent,
     canActivateChild: [...AuthGuard],
     children: [
