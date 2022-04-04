@@ -16,7 +16,6 @@ export class ReuseStrategy implements RouteReuseStrategy {
 
   // 删除缓存的路由
   public static removeCacheRouter(url: string) {
-    console.log('删除缓存', url)
     url = routeUtil.simplifyUrl(url)
     if (ReuseStrategy._cacheRouters[url]) {
       ReuseStrategy._cacheRouters[url].componentRef.destroy()
