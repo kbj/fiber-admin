@@ -9,6 +9,14 @@ class RouteUtil {
     // @ts-ignore
     return activeRoute?._routerState.url
   }
+
+  /**
+   * 简化url，把/替换为_
+   * @param url
+   */
+  simplifyUrl(url: string): string {
+    return url.replace(/\//g, '_')
+  }
 }
 
 export default new RouteUtil()

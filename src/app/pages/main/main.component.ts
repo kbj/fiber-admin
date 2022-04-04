@@ -38,6 +38,6 @@ export class MainComponent implements OnInit {
 
   // 加载路由
   prepareRoute(outlet: RouterOutlet) {
-    return outlet?.activatedRouteData?.[Constant.ComponentKey]
+    return outlet?.activatedRouteData?.[Constant.CacheKey] !== false
   }
 }

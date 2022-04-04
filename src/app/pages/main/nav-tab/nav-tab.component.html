@@ -10,10 +10,25 @@
     >
       <nz-tab
         (nzClick)="goToPage(tab)"
+        (nzContextmenu)="contextMenu($event, menu)"
         *ngFor="let tab of tabList; let i = index; trackBy: trackByTab"
         [nzClosable]="tabList.length > 1"
         [nzTitle]="tab.name"
-      ></nz-tab>
+      >
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li (click)="refresh($event)" [nzDisabled]="i !== currentTabIndex" nz-menu-item>刷新</li>
+            <li (click)="closeCurrentTab(tab, $event, i)" [nzDisabled]="i === 0" nz-menu-item>关闭标签</li>
+            <li (click)="closeOtherTab(tab, $event, i)" [nzDisabled]="tabList.length === 1" nz-menu-item>
+              关闭其他标签
+            </li>
+            <li (click)="closeLeftTab(tab, $event, i)" [nzDisabled]="i === 0" nz-menu-item>关闭左侧标签</li>
+            <li (click)="closeRightTab(tab, $event, i)" [nzDisabled]="tabList.length - 1 === i" nz-menu-item>
+              关闭右侧标签
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-tab>
     </nz-tabset>
   </nz-card>
 </div>

@@ -8,5 +8,4 @@ export default class Constant {
   public static MessageNotAuthentication = '您暂时没有访问此资源的权限！' // 无权限访问的提示语
 
   public static CacheKey = 'cache' // 放置在路由data中判断是否需要缓存的key
-  public static ComponentKey = 'key'
 }
