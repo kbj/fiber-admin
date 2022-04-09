@@ -7,6 +7,7 @@ import { NavTabModel } from '@models/nav-tab.model'
 import { UserStoreService } from '@store/user-store.service'
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown'
 import eventUtil from '@utils/event-util'
+import routeUtil from '@utils/route.util'
 
 @Component({
   selector: 'app-nav-tab',
@@ -42,6 +43,11 @@ export class NavTabComponent implements OnInit {
             name: menu.name,
             path: routeInfo.url
           })
+
+          // 更新面包屑地址
+          this.userStore.breadcrumbLists.next(
+            routeUtil.generateBreadcrumb(routeInfo.url, this.userStore.menuTreeList.getValue())
+          )
         }
 
         // 更新当前激活的tab索引值

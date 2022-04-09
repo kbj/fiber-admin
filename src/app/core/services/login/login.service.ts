@@ -13,6 +13,7 @@ import { UserStoreService } from '@store/user-store.service'
 import { MenuTreeModel } from '@models/menu.model'
 import mapUtil from '@utils/map.util'
 import sessionCacheUtil from '@utils/session-cache.util'
+import routeUtil from '@utils/route.util'
 
 @Injectable({
   providedIn: 'root'
@@ -63,11 +64,19 @@ export class LoginService {
     this.http.get<ResponseModel<MenuTreeModel[]>>('system/menu/tree-list').subscribe((resp) => {
       // 更新菜单树
       const treeList = resp.data ? resp.data : []
-      this.userStore.menuTreeList.next(treeList)
+      const newTreeList = JSON.parse(JSON.stringify(treeList))
+      // 更新展开状态
+      const breadcrumbs = routeUtil.generateBreadcrumb(
+        routeUtil.getCurrentUrlByActivatedRoute(this.activeRoute.snapshot),
+        newTreeList
+      )
+      this.userStore.breadcrumbLists.next(breadcrumbs)
+
+      this.userStore.menuTreeList.next(newTreeList)
       sessionCacheUtil.setCache(Constant.SessionStorageMenuTreeListKey, treeList)
 
       // 更新拍平的菜单列表
-      const flatList = mapUtil.flatMenuTree(resp.data)
+      const flatList = mapUtil.flatMenuTree(treeList)
       this.userStore.flatMenuList.next(flatList)
       sessionCacheUtil.setCache(Constant.SessionStorageMenuListKey, flatList)
     })

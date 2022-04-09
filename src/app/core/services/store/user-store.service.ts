@@ -55,4 +55,15 @@ export class UserStoreService {
   set token(value: BehaviorSubject<String | undefined>) {
     this._token = value
   }
+
+  // 用户页面上的面包屑信息
+  private _breadcrumbLists = new BehaviorSubject<string[]>([])
+
+  get breadcrumbLists(): BehaviorSubject<string[]> {
+    return this._breadcrumbLists
+  }
+
+  set breadcrumbLists(value: BehaviorSubject<string[]>) {
+    this._breadcrumbLists = value
+  }
 }

@@ -11,12 +11,21 @@ const routes: Routes = [
     canActivateChild: [...AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
         path: 'home',
         loadChildren: () => import('../home/home.module').then((m) => m.HomeModule)
       },
       {
         path: 'system/role',
         loadChildren: () => import('../system/role/role.module').then((m) => m.RoleModule)
+      },
+      {
+        path: 'system/menu',
+        loadChildren: () => import('../system/menu/menu.module').then((m) => m.MenuModule)
       }
     ]
   }

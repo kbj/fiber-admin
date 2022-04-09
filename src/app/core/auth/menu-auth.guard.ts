@@ -13,7 +13,7 @@ import Constant from '@core/config/constant.config'
 })
 export class MenuAuthGuard implements CanActivateChild {
   // 不需要权限的地址
-  NOT_AUTH_MENU = ['/main']
+  NOT_AUTH_MENU = ['/main', '/main/home']
 
   constructor(private userStore: UserStoreService, private messageService: NzMessageService, private router: Router) {}
 

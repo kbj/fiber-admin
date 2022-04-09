@@ -23,6 +23,7 @@
         <li
           *ngIf="menu.children; else menuItem"
           [nzIcon]="menu.icon"
+          [nzOpen]="menu.open && menu.open === true"
           [nzPaddingLeft]="(isCollapse.asObservable() | async) ? 0 : menu.level * 24"
           [nzTitle]="menu.name"
           nz-submenu

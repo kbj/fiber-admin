@@ -8,5 +8,6 @@ export interface MenuTreeModel {
   icon?: string
   path?: string
   level: number
+  open?: boolean
   children?: MenuTreeModel[]
 }

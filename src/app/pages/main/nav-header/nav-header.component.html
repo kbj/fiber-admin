@@ -6,7 +6,13 @@
 
   <!--面包屑和右侧的用户信息-->
   <div class="content">
-    <div>面包屑</div>
+    <div class="breadcrumb">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
+          {{ breadcrumb }}
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
     <app-nav-header-toolbar></app-nav-header-toolbar>
   </div>
 </div>
