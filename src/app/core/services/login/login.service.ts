@@ -13,7 +13,6 @@ import { UserStoreService } from '@store/user-store.service'
 import { MenuTreeModel } from '@models/menu.model'
 import mapUtil from '@utils/map.util'
 import sessionCacheUtil from '@utils/session-cache.util'
-import routeUtil from '@utils/route.util'
 
 @Injectable({
   providedIn: 'root'
@@ -65,13 +64,6 @@ export class LoginService {
       // 更新菜单树
       const treeList = resp.data ? resp.data : []
       const newTreeList = JSON.parse(JSON.stringify(treeList))
-      // 更新展开状态
-      const breadcrumbs = routeUtil.generateBreadcrumb(
-        routeUtil.getCurrentUrlByActivatedRoute(this.activeRoute.snapshot),
-        newTreeList
-      )
-      this.userStore.breadcrumbLists.next(breadcrumbs)
-
       this.userStore.menuTreeList.next(newTreeList)
       sessionCacheUtil.setCache(Constant.SessionStorageMenuTreeListKey, treeList)
 

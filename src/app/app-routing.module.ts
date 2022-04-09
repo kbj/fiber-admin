@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { LoadGuard } from '@core/auth'
+import { LoadMainGuard } from '@core/guard'
 
 const routes: Routes = [
   // 主页面
@@ -13,7 +13,7 @@ const routes: Routes = [
   // 主页面
   {
     path: 'main',
-    canLoad: [...LoadGuard],
+    canLoad: [...LoadMainGuard],
     loadChildren: () => import('@pages/main/main.module').then((m) => m.MainModule)
   }
 ]

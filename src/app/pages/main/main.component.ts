@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { OthersStoreService } from '@store/others-store.service'
 import { fadeRouteAnimation } from '../../animations/fade.animation'
-import { RouterOutlet } from '@angular/router'
-import { HttpClient } from '@angular/common/http'
+import { ActivatedRoute, RouterOutlet } from '@angular/router'
 import { UserStoreService } from '@store/user-store.service'
-import { LoginService } from '@services/login/login.service'
 import Constant from '@core/config/constant.config'
+import routeUtil from '@utils/route.util'
 
 @Component({
   selector: 'app-main',
@@ -18,15 +17,18 @@ export class MainComponent implements OnInit {
   public globalCollapse = this.othersStore.globalCollapse
 
   constructor(
-    private http: HttpClient,
-    private loginService: LoginService,
+    private activeRoute: ActivatedRoute,
     private userStore: UserStoreService,
     private othersStore: OthersStoreService
   ) {}
 
   ngOnInit(): void {
-    // 请求菜单
-    this.loginService.getMenuTreeList()
+    // 初始化面包屑
+    const breadcrumbs = routeUtil.generateBreadcrumb(
+      routeUtil.getCurrentUrlByActivatedRoute(this.activeRoute.snapshot),
+      this.userStore.menuTreeList.getValue()
+    )
+    this.userStore.breadcrumbLists.next(breadcrumbs)
   }
 
   // 收缩伸展事件绑定当前状态

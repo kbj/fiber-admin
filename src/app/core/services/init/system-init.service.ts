@@ -6,7 +6,6 @@ import {UserInfo} from '@models/user.model'
 import sessionCache from '@utils/session-cache.util'
 import {MenuTreeModel} from '@models/menu.model'
 import {ActivatedRoute} from '@angular/router'
-import routeUtil from '@utils/route.util'
 
 /**
  * 系统初始化所需的信息
@@ -49,12 +48,6 @@ export class SystemInitService {
 
     const menuTreeList = sessionCache.getCache<MenuTreeModel[]>(Constant.SessionStorageMenuTreeListKey)
     if (menuTreeList) {
-      // 获取面包屑和路由展开信息
-      const breadcrumbs = routeUtil.generateBreadcrumb(
-        routeUtil.getCurrentUrlByActivatedRoute(this.activeRoute.snapshot),
-        menuTreeList
-      )
-      this.userStore.breadcrumbLists.next(breadcrumbs)
       this.userStore.menuTreeList.next(menuTreeList)
     }
   }
