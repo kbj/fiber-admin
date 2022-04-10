@@ -1,4 +1,20 @@
 <div class="toolbar">
-  <nz-avatar [nzText]="this.userName.substring(0, 1)" style="background-color: #1890ff"></nz-avatar>
-  <span class="name">{{ this.userName }}</span>
+  <div [nzDropdownMenu]="menu" class="user-info" nz-dropdown>
+    <nz-avatar [nzText]="this.userName.substring(0, 1)" style="background-color: #1890ff"></nz-avatar>
+    <span class="name">{{ this.userName }}</span>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu nzSelectable>
+        <li nz-menu-item>
+          <i class="item-icon" nz-icon nzTheme="outline" nzType="home"></i>
+          <span>首页</span>
+        </li>
+        <li nz-menu-divider></li>
+        <li (click)="logout()" nz-menu-item>
+          <i class="item-icon" nz-icon nzTheme="outline" nzType="logout"></i>
+          <span>退出登录</span>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </div>
 </div>

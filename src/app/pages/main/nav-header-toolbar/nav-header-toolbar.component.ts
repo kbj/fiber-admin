@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { UserStoreService } from '@store/user-store.service'
+import { LoginService } from '@services/login/login.service'
 
 @Component({
   selector: 'app-nav-header-toolbar',
@@ -11,7 +12,7 @@ export class NavHeaderToolbarComponent implements OnInit {
   // 页面右上角字母
   userName: string = ''
 
-  constructor(private userStore: UserStoreService) {}
+  constructor(private userStore: UserStoreService, private loginService: LoginService) {}
 
   ngOnInit(): void {
     this.userStore.userInfo.subscribe((info) => {
@@ -19,5 +20,12 @@ export class NavHeaderToolbarComponent implements OnInit {
         this.userName = info.name.trim()
       }
     })
+  }
+
+  /**
+   * 退出登录方法
+   */
+  logout() {
+    this.loginService.logout()
   }
 }

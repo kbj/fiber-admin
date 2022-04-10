@@ -73,4 +73,25 @@ export class LoginService {
       sessionCacheUtil.setCache(Constant.SessionStorageMenuListKey, flatList)
     })
   }
+
+  /**
+   * 注销登录
+   */
+  logout() {
+    // 清除localStorage
+    localCache.clearCache()
+    sessionCacheUtil.clearCache()
+
+    // 清空菜单树
+    this.userStore.flatMenuList.next([])
+    this.userStore.menuTreeList.next([])
+    this.userStore.breadcrumbLists.next([])
+
+    // 清除用户信息
+    this.userStore.userInfo.next(undefined)
+    this.userStore.token.next(undefined)
+
+    // 导航到登录页
+    this.router.navigateByUrl('/login')
+  }
 }

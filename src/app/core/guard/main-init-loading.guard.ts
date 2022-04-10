@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {CanLoad, Route, UrlSegment, UrlTree} from '@angular/router'
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router'
 import {Observable, Subject} from 'rxjs'
 import {UserStoreService} from '@store/user-store.service'
 import {OthersStoreService} from '@store/others-store.service'
@@ -11,7 +11,7 @@ import {LoginService} from '@services/login/login.service'
 @Injectable({
   providedIn: 'root'
 })
-export class MainInitLoadingGuard implements CanLoad {
+export class MainInitLoadingGuard implements CanActivate {
   /**
    * 加载框是否加载完毕，默认false
    */
@@ -39,9 +39,9 @@ export class MainInitLoadingGuard implements CanLoad {
     })
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // 监控菜单树是否已经加载
     this.otherStore.globalSpin.next(true)
