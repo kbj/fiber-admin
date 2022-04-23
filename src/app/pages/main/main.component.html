@@ -25,7 +25,7 @@
         <app-nav-tab></app-nav-tab>
 
         <!--路由展示内容-->
-        <div [@fadeRouteAnimation]="prepareRoute(outlet)">
+        <div [@fadeRouteAnimation]="prepareRoute(outlet)" style="padding: 2rem 2rem">
           <router-outlet #outlet="outlet"></router-outlet>
         </div>
       </nz-content>
