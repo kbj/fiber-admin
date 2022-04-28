@@ -1,17 +1,47 @@
 <div>
   <nz-card>
-    <form nz-form>
+    <form nz-form [formGroup]="queryForm">
       <!-- 使用栅格适配移动端 -->
       <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }">
-        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="6">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="6">
           <nz-form-item>
             <nz-form-label>角色名称</nz-form-label>
             <nz-form-control>
-              <input nz-input placeholder="请输入角色名称" name="roleName" />
+              <input nz-input placeholder="请输入角色名称" name="roleName" formControlName="roleName"/>
             </nz-form-control>
           </nz-form-item>
         </div>
+
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="6">
+          <nz-form-item>
+            <nz-form-label>角色编码</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="请输入角色编码" name="roleCode" formControlName="roleCode"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="6">
+          <nz-form-item>
+            <nz-form-label>创建时间</nz-form-label>
+            <nz-form-control>
+              <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="createTime"></nz-range-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="6">
+          <button nz-button [nzType]="'primary'" (click)="query()"><i nz-icon nzType="search"></i>搜索</button>
+          <button nz-button style="margin-left: 1.5rem">
+            <i nz-icon nzType="close-circle" nzTheme="outline"></i>重置
+          </button>
+        </div>
       </div>
     </form>
+  </nz-card>
+
+  <!-- 数据列表展示部分 -->
+  <nz-card>
+
   </nz-card>
 </div>

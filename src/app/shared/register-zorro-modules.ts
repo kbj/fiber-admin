@@ -11,6 +11,8 @@ import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb'
 import {NzAvatarModule} from 'ng-zorro-antd/avatar'
 import {NzCardModule} from 'ng-zorro-antd/card'
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown'
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker'
+import {NzTableModule} from 'ng-zorro-antd/table'
 
 /**
  * 提供统一的ng-zorro组件引入
@@ -28,5 +30,7 @@ export const ZorroModules = [
   NzBreadCrumbModule,
   NzAvatarModule,
   NzCardModule,
-  NzDropDownModule
+  NzDropDownModule,
+  NzDatePickerModule,
+  NzTableModule
 ]
