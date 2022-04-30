@@ -4,6 +4,7 @@ import {ZorroModules} from './register-zorro-modules'
 import {NzIconModule} from 'ng-zorro-antd/icon'
 import {ZorroIcons} from './register-zorro-icons'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {ComponentsModule} from './components/components.module'
 
 /**
  * SharedModule 应该 包含 Angular 通用模块
@@ -13,7 +14,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
  */
 @NgModule({
   declarations: [],
-  imports: [CommonModule, NzIconModule.forChild(ZorroIcons), FormsModule, ReactiveFormsModule, ...ZorroModules],
-  exports: [CommonModule, NzIconModule, FormsModule, ReactiveFormsModule, ...ZorroModules]
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    NzIconModule.forChild(ZorroIcons),
+    FormsModule,
+    ReactiveFormsModule,
+    ...ZorroModules
+  ],
+  exports: [CommonModule, ComponentsModule, NzIconModule, FormsModule, ReactiveFormsModule, ...ZorroModules]
 })
 export class SharedModule {}

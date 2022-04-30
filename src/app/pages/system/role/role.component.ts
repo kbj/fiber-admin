@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
-import { RoleService } from '@services/business/role.service'
-import { PageModel, ResponseModel } from '@models/response.model'
+import { TableService } from '@services/common/role.service'
 import { RoleListModel } from '@models/role.model'
+import { PageModel } from '@models/response.model'
 
 @Component({
   selector: 'app-role',
@@ -18,16 +18,31 @@ export class RoleComponent implements OnInit {
     createTime: [null]
   })
   // 角色列表数据
-  roleLists: ResponseModel<PageModel<RoleListModel>> | undefined
+  apiData: PageModel<RoleListModel> = {
+    current: 0,
+    pageSize: 0,
+    pages: 0,
+    records: [],
+    total: 0
+  }
+  headerName = ['角色编号', '角色名称', '角色编码']
+  loading = false
 
-  constructor(private fb: FormBuilder, private roleService: RoleService) {}
+  constructor(private fb: FormBuilder, private roleService: TableService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //this.query()
+  }
 
   /**
    * 请求列表数据
    */
   async query() {
-    this.roleLists = await this.roleService.getRoleList(this.queryForm.value)
+    this.loading = true
+    const roleLists = await this.roleService.getRoleList(this.queryForm.value)
+    if (roleLists?.data) {
+      this.apiData = roleLists.data
+    }
+    this.loading = false
   }
 }

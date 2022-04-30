@@ -2,22 +2,21 @@ import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {PageModel, ResponseModel} from '@models/response.model'
 import {NzSafeAny} from 'ng-zorro-antd/core/types'
-import {RoleListModel} from '@models/role.model'
 import {lastValueFrom} from 'rxjs'
 
 /**
- * 角色管理相关的service
+ * 封装列表相关的service
  */
 @Injectable({
   providedIn: 'root'
 })
-export class RoleService {
+export class TableService {
   constructor(private http: HttpClient) {}
 
   /**
    * 请求角色列表数据
    */
-  getRoleList(query: NzSafeAny) {
-    return lastValueFrom(this.http.post<ResponseModel<PageModel<RoleListModel>>>('system/role/list', query))
+  getTableList<T>(url: string, query: NzSafeAny) {
+    return lastValueFrom(this.http.post<ResponseModel<PageModel<T>>>(url, query))
   }
 }

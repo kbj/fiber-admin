@@ -1,0 +1,39 @@
+<div>
+  <!-- 数据列表展示部分 -->
+  <nz-card class="table-list" [nzBordered]="false" [nzTitle]="'查询表格'">
+    <nz-table
+      #table
+      [nzData]="listData.records"
+      nzShowPagination
+      nzOuterBordered
+      [nzLoading]="loading"
+      nzTableLayout="fixed"
+      [nzFrontPagination]="false"
+      [nzLoadingDelay]="100"
+      [nzTotal]="listData.total"
+      [nzPageSize]="listData.pageSize"
+      [nzPageIndex]="listData.current"
+      [nzShowTotal]="pageTotalInfo"
+    >
+      <thead>
+        <tr>
+          <th *ngFor="let name of headerName" [nzAlign]="'center'" [nzWidth]="'200px'">{{ name }}</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td [nzAlign]="'center'">{{ data.id }}</td>
+          <td>{{ data.roleName }}</td>
+          <td>{{ data.roleCode }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <!--展示分页总数信息-->
+  <ng-template #pageTotalInfo let-total let-range="range">
+    第 {{ range[0] }}-{{ range[1] }} 条/总共 {{ total }} 条
+  </ng-template>
+</div>
