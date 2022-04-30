@@ -51,8 +51,8 @@
       "@core/*": [
         "src/app/core/*"
       ],
-      "@models/*": [
-        "src/app/shared/models/*"
+      "@shared/*": [
+        "src/app/shared/*"
       ]
     }
   },

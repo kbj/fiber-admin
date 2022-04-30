@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
-import { TableService } from '@services/common/role.service'
-import { RoleListModel } from '@models/role.model'
-import { PageModel } from '@models/response.model'
+import { CommonTableKeyValueModel } from '@shared/models/common-table.model'
+import { TableListComponent } from '@shared/components/table-list/table-list.component'
+import Constant from '@core/config/constant.config'
 
 @Component({
   selector: 'app-role',
@@ -10,39 +10,53 @@ import { PageModel } from '@models/response.model'
   styleUrls: ['./role.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoleComponent implements OnInit {
+export class RoleComponent implements OnInit, AfterViewInit {
   // 列表抬头搜索表单
   queryForm: FormGroup = this.fb.group({
     roleName: [null],
     roleCode: [null],
-    createTime: [null]
+    createAt: [null]
   })
-  // 角色列表数据
-  apiData: PageModel<RoleListModel> = {
-    current: 0,
-    pageSize: 0,
-    pages: 0,
-    records: [],
-    total: 0
-  }
-  headerName = ['角色编号', '角色名称', '角色编码']
-  loading = false
 
-  constructor(private fb: FormBuilder, private roleService: TableService, private cdr: ChangeDetectorRef) {}
+  // 列表组件
+  @ViewChild(TableListComponent)
+  private tableListComponent!: TableListComponent
 
-  ngOnInit(): void {
-    //this.query()
+  // 列表参数结构定义
+  tableKeyValue: CommonTableKeyValueModel[] = [
+    {
+      name: '编码',
+      value: 'id',
+      width: '8%'
+    },
+    {
+      name: '角色名称',
+      value: 'roleName'
+    },
+    {
+      name: '角色编码',
+      value: 'roleCode'
+    },
+    {
+      name: '创建时间',
+      value: 'createAt',
+      type: 'date',
+      format: Constant.YYYY_MM_DD_HH_MM_SS
+    }
+  ]
+
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.query()
   }
 
   /**
    * 请求列表数据
    */
-  async query() {
-    this.loading = true
-    const roleLists = await this.roleService.getRoleList(this.queryForm.value)
-    if (roleLists?.data) {
-      this.apiData = roleLists.data
-    }
-    this.loading = false
+  query() {
+    this.tableListComponent.requestTableData(this.queryForm.value)
   }
 }

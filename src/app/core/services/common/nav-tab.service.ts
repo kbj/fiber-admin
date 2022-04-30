@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {NavTabModel} from '@models/nav-tab.model'
+import {NavTabModel} from '@shared/models/nav-tab.model'
 import {Router} from '@angular/router'
 import {ReuseStrategy} from '@services/common/reuse-strategy'
 

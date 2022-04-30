@@ -1,6 +1,6 @@
 <div>
   <!-- 数据列表展示部分 -->
-  <nz-card class="table-list" [nzBordered]="false" [nzTitle]="'查询表格'">
+  <nz-card class="table-list" [nzBordered]="false" [nzTitle]="title">
     <nz-table
       #table
       [nzData]="listData.records"
@@ -15,18 +15,26 @@
       [nzPageIndex]="listData.current"
       [nzShowTotal]="pageTotalInfo"
     >
+      <!--标题展示-->
       <thead>
         <tr>
-          <th *ngFor="let name of headerName" [nzAlign]="'center'" [nzWidth]="'200px'">{{ name }}</th>
-          <th>操作</th>
+          <th
+            *ngFor="let item of columnKeyValueMap"
+            [nzAlign]="item.align ? item.align : null"
+            [nzWidth]="!item.width ? null : item.width"
+          >
+            {{ item.name }}
+          </th>
+          <th *ngIf="commendColum">操作</th>
         </tr>
       </thead>
 
+      <!-- 数据展示 -->
       <tbody>
         <tr *ngFor="let data of table.data">
-          <td [nzAlign]="'center'">{{ data.id }}</td>
-          <td>{{ data.roleName }}</td>
-          <td>{{ data.roleCode }}</td>
+          <td [nzAlign]="item.align ? item.align : null" *ngFor="let item of columnKeyValueMap">
+            {{ getColumnValue(item, data) }}
+          </td>
         </tr>
       </tbody>
     </nz-table>

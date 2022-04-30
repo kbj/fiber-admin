@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {BehaviorSubject} from 'rxjs'
-import {UserInfo} from '@models/user.model'
-import {MenuTreeModel} from '@models/menu.model'
+import {UserInfo} from '@shared/models/user.model'
+import {MenuTreeModel} from '@shared/models/menu.model'
 
 /**
  * 用户相关的存储

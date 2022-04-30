@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot } from '@angular/router'
-import { MenuTreeModel } from '@models/menu.model'
+import { MenuTreeModel } from '@shared/models/menu.model'
 
 class RouteUtil {
   /**

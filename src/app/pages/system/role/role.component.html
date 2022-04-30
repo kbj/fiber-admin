@@ -25,7 +25,7 @@
           <nz-form-item>
             <nz-form-label>创建时间</nz-form-label>
             <nz-form-control>
-              <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="createTime"></nz-range-picker>
+              <nz-range-picker [nzFormat]="'yyyy/MM/dd'" formControlName="createAt"></nz-range-picker>
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -41,4 +41,5 @@
   </nz-card>
 
   <!--  <app-table-list [headerName]="headerName" [listData]="apiData" [loading]="loading"></app-table-list>-->
+  <app-table-list [columnKeyValueMap]="tableKeyValue" [requestUrl]="'system/role/list'"></app-table-list>
 </div>

@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core'
 import {UserStoreService} from '@store/user-store.service'
 import localCache from '@utils/local-cache.util'
 import Constant from '@core/config/constant.config'
-import {UserInfo} from '@models/user.model'
+import {UserInfo} from '@shared/models/user.model'
 import sessionCache from '@utils/session-cache.util'
-import {MenuTreeModel} from '@models/menu.model'
+import {MenuTreeModel} from '@shared/models/menu.model'
 import {ActivatedRoute} from '@angular/router'
 
 /**
