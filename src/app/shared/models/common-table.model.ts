@@ -8,4 +8,5 @@ export interface CommonTableKeyValueModel {
   format?: string
   width?: string
   align?: 'left' | 'right' | 'center' | null
+  showSort?: boolean
 }

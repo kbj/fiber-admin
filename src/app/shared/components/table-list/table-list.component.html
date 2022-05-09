@@ -1,6 +1,6 @@
 <div>
   <!-- 数据列表展示部分 -->
-  <nz-card class="table-list" [nzBordered]="false" [nzTitle]="title">
+  <nz-card class="table-list" [nzBordered]="false" [nzTitle]="title" [nzExtra]="tableToolbar">
     <nz-table
       #table
       [nzData]="listData.records"
@@ -9,7 +9,7 @@
       [nzLoading]="loading"
       nzTableLayout="fixed"
       [nzFrontPagination]="false"
-      [nzLoadingDelay]="100"
+      [nzLoadingDelay]="loadingDelay"
       [nzTotal]="listData.total"
       [nzPageSize]="listData.pageSize"
       [nzPageIndex]="listData.current"
@@ -17,25 +17,34 @@
     >
       <!--标题展示-->
       <thead>
-        <tr>
-          <th
-            *ngFor="let item of columnKeyValueMap"
-            [nzAlign]="item.align ? item.align : null"
-            [nzWidth]="!item.width ? null : item.width"
-          >
-            {{ item.name }}
-          </th>
-          <th *ngIf="commendColum">操作</th>
-        </tr>
+      <tr>
+        <th
+          *ngFor="let item of columnKeyValueMap"
+          [nzAlign]="item.align ? item.align : null"
+          [nzWidth]="!item.width ? null : item.width + 'px'"
+          nz-resizable
+          nzPreview
+          [nzMaxWidth]="1200"
+          [nzMinWidth]="80"
+        >
+          {{ item.name }}
+        </th>
+        <th *ngIf="commendColum">操作</th>
+      </tr>
       </thead>
 
       <!-- 数据展示 -->
       <tbody>
-        <tr *ngFor="let data of table.data">
-          <td [nzAlign]="item.align ? item.align : null" *ngFor="let item of columnKeyValueMap">
-            {{ getColumnValue(item, data) }}
-          </td>
-        </tr>
+      <tr *ngFor="let data of table.data">
+        <td [nzAlign]="item.align ? item.align : null" *ngFor="let item of columnKeyValueMap">
+          {{ getColumnValue(item, data) }}
+        </td>
+
+        <!--操作列-->
+        <td *ngIf="commendColum">
+          <ng-container *ngTemplateOutlet="commendColum; context: {data}"></ng-container>
+        </td>
+      </tr>
       </tbody>
     </nz-table>
   </nz-card>
@@ -43,5 +52,26 @@
   <!--展示分页总数信息-->
   <ng-template #pageTotalInfo let-total let-range="range">
     第 {{ range[0] }}-{{ range[1] }} 条/总共 {{ total }} 条
+  </ng-template>
+
+  <!--工具栏汇总-->
+  <ng-template #tableToolbar>
+    <div class="toolbar">
+      <!--自定义部分-->
+      <div class="custom-toolbar" *ngIf="toolbar">
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+      </div>
+
+      <!--默认部分-->
+      <div class="default-table-toolbar">
+        <nz-divider nzType="vertical" *ngIf="toolbar"></nz-divider>
+
+        <nz-space nzSize="middle">
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="reload" [nzSpin]="loading" nzTheme="outline" nz-tooltip nzTooltipTitle="刷新"></i>
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="column-height" nzTheme="outline" nz-tooltip nzTooltipTitle="密度"></i>
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="setting" nzTheme="outline" nz-tooltip nzTooltipTitle="列设置"></i>
+        </nz-space>
+      </div>
+    </div>
   </ng-template>
 </div>

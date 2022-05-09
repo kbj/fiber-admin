@@ -22,12 +22,14 @@ export class RoleComponent implements OnInit, AfterViewInit {
   @ViewChild(TableListComponent)
   private tableListComponent!: TableListComponent
 
+  // 是否加载中
+  loading: boolean = false
+
   // 列表参数结构定义
   tableKeyValue: CommonTableKeyValueModel[] = [
     {
       name: '编码',
-      value: 'id',
-      width: '8%'
+      value: 'id'
     },
     {
       name: '角色名称',
@@ -57,6 +59,16 @@ export class RoleComponent implements OnInit, AfterViewInit {
    * 请求列表数据
    */
   query() {
+    // 时间处理，时分秒都置零
+    const queryValue = this.queryForm.value
+    if (queryValue.createAt && queryValue.createAt.length > 0) {
+      const startTime = queryValue.createAt[0] as Date
+      const endTime = queryValue.createAt[1] as Date
+      startTime.setHours(0, 0, 0, 0)
+      endTime.setHours(0, 0, 0, 0)
+      queryValue.createAt[0] = startTime
+      queryValue.createAt[1] = endTime
+    }
     this.tableListComponent.requestTableData(this.queryForm.value)
   }
 }
