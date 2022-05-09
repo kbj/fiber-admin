@@ -42,7 +42,7 @@
 
         <!--操作列-->
         <td *ngIf="commendColum">
-          <ng-container *ngTemplateOutlet="commendColum; context: {data}"></ng-container>
+          <ng-container *ngTemplateOutlet="commendColum; context: { $implicit: data }"></ng-container>
         </td>
       </tr>
       </tbody>
@@ -67,9 +67,12 @@
         <nz-divider nzType="vertical" *ngIf="toolbar"></nz-divider>
 
         <nz-space nzSize="middle">
-          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="reload" [nzSpin]="loading" nzTheme="outline" nz-tooltip nzTooltipTitle="刷新"></i>
-          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="column-height" nzTheme="outline" nz-tooltip nzTooltipTitle="密度"></i>
-          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="setting" nzTheme="outline" nz-tooltip nzTooltipTitle="列设置"></i>
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="reload" [nzSpin]="loading" nzTheme="outline"
+             nz-tooltip nzTooltipTitle="刷新"></i>
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="column-height" nzTheme="outline" nz-tooltip
+             nzTooltipTitle="密度"></i>
+          <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="setting" nzTheme="outline" nz-tooltip
+             nzTooltipTitle="列设置"></i>
         </nz-space>
       </div>
     </div>
