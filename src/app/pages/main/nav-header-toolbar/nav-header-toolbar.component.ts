@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { UserStoreService } from '@store/user-store.service'
-import { LoginService } from '@services/login/login.service'
+import { LoginService } from '@services/business/login.service'
 
 @Component({
   selector: 'app-nav-header-toolbar',

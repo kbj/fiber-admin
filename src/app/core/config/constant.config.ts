@@ -10,4 +10,6 @@ export default class Constant {
   public static CacheKey = 'cache' // 放置在路由data中判断是否需要缓存的key
 
   public static YYYY_MM_DD_HH_MM_SS = 'yyyy-MM-dd HH:mm:ss' // 时间格式
+
+  public static NOT_COLLAPSE_ITEM_NUMBER = 3 // 列表查询表单中不需要展开的表单项数目
 }

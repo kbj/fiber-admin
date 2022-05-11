@@ -20,8 +20,11 @@
       <tr>
         <th
           *ngFor="let item of columnKeyValueMap"
-          [nzAlign]="item.align ? item.align : null"
+          nzAlign="center"
           [nzWidth]="!item.width ? null : item.width + 'px'"
+          [nzShowSort]="item.showSort"
+          [nzSortOrder]="item.sortOrder ? item.sortOrder : null"
+          [nzSortFn]="item.sortFn ? item.sortFn : null"
           nz-resizable
           nzPreview
           [nzMaxWidth]="1200"
@@ -29,19 +32,19 @@
         >
           {{ item.name }}
         </th>
-        <th *ngIf="commendColum">操作</th>
+        <th *ngIf="commendColum" nzAlign="center">操作</th>
       </tr>
       </thead>
 
       <!-- 数据展示 -->
       <tbody>
       <tr *ngFor="let data of table.data">
-        <td [nzAlign]="item.align ? item.align : null" *ngFor="let item of columnKeyValueMap">
+        <td [nzAlign]="item.align ? item.align : 'center'" *ngFor="let item of columnKeyValueMap">
           {{ getColumnValue(item, data) }}
         </td>
 
         <!--操作列-->
-        <td *ngIf="commendColum">
+        <td *ngIf="commendColum" nzAlign="center">
           <ng-container *ngTemplateOutlet="commendColum; context: { $implicit: data }"></ng-container>
         </td>
       </tr>

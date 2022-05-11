@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router'
-import {Observable, Subject} from 'rxjs'
-import {UserStoreService} from '@store/user-store.service'
-import {OthersStoreService} from '@store/others-store.service'
-import {LoginService} from '@services/login/login.service'
+import { Injectable } from '@angular/core'
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router'
+import { Observable, Subject } from 'rxjs'
+import { UserStoreService } from '@store/user-store.service'
+import { OthersStoreService } from '@store/others-store.service'
+import { LoginService } from '@services/business/login.service'
 
 /**
  * main组件检查初始化完毕的守卫，主要用于菜单初始化

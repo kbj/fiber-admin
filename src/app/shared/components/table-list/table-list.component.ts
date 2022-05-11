@@ -11,7 +11,7 @@ import {
   TemplateRef
 } from '@angular/core'
 import { PageModel, ResponseModel } from '@shared/models/response.model'
-import { CommonTableKeyValueModel } from '@shared/models/common-table.model'
+import { CommonTableKeyValueModel } from '@shared/models/common.model'
 import { TableService } from '@services/common/table.service'
 import { NzSafeAny } from 'ng-zorro-antd/core/types'
 import { DatePipe } from '@angular/common'
@@ -33,7 +33,9 @@ export class TableListComponent implements OnInit, OnChanges {
   @Output() loadingChange = new EventEmitter<boolean>() // 加载状态改变事件，构建双向绑定
   @Input() loadingDelay = 100 // 加载动画延迟，防止闪烁
 
-  // 初始化请求数据
+  /**
+   * 初始化请求数据
+   */
   listData: PageModel<any> = { current: 0, pages: 0, pageSize: 0, records: [], total: 0 }
 
   constructor(private tableService: TableService, private cdr: ChangeDetectorRef, private datePipe: DatePipe) {}

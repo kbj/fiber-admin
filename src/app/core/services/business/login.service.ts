@@ -14,6 +14,9 @@ import { MenuTreeModel } from '@shared/models/menu.model'
 import mapUtil from '@utils/map.util'
 import sessionCacheUtil from '@utils/session-cache.util'
 
+/**
+ * 登录模块service
+ */
 @Injectable({
   providedIn: 'root'
 })

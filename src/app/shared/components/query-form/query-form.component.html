@@ -1,0 +1,55 @@
+<div>
+  <nz-card [nzBodyStyle]="{'padding-bottom':0}" class="m-b-1">
+    <form nz-form [formGroup]="queryForm">
+      <!-- 使用栅格适配移动端 -->
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24}">
+        <ng-container *ngFor="let config of formConfig; index as i">
+          <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="8" [nzXl]="6" [nzXXl]="6"
+               *ngIf="i < notCollapseItemNumber || !isCollapse">
+            <!--文本输入框-->
+            <nz-form-item *ngIf="config.type === 'input'">
+              <nz-form-label>{{config.name}}</nz-form-label>
+              <nz-form-control>
+                <input nz-input [placeholder]="'请输入' + config.name" [name]="config.value"
+                       [formControlName]="config.value"/>
+              </nz-form-control>
+            </nz-form-item>
+
+            <!--时间范围选择框-->
+            <nz-form-item *ngIf="config.type === 'date-range'">
+              <nz-form-label>{{config.name}}</nz-form-label>
+              <nz-form-control>
+                <nz-range-picker [nzFormat]="config.format ? config.format : 'yyyy/MM/dd'"
+                                 [formControlName]="config.value" nzAllowClear
+                                 [nzMode]="config.dateMode ? config.dateMode : 'date'"></nz-range-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
+
+        <!--表单搜索按钮-->
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="8" [nzXl]="6" [nzXXl]="6" [nzOffset]="searchAreaOffset">
+          <nz-form-item class="search-area">
+            <nz-space nzSize="middle">
+              <button *nzSpaceItem nz-button [nzType]="'primary'" (click)="search()">
+                <i nz-icon nzType="search" *ngIf="!loading"></i>
+                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="loading"></i>
+                搜索
+              </button>
+              <button *nzSpaceItem nz-button (click)="reset()">
+                <i nz-icon nzType="close-circle" nzTheme="outline"></i>重置
+              </button>
+              <ng-container *ngIf="formConfig.length > 3">
+                <a class="hand-model" *nzSpaceItem (click)="isCollapse = !isCollapse">
+                  <span *ngIf="isCollapse">展开</span>
+                  <span *ngIf="!isCollapse">收起</span>
+                  <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>
+                </a>
+              </ng-container>
+            </nz-space>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </nz-card>
+</div>

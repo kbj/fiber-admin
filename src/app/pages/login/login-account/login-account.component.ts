@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild } from '@a
 import LoginAccount from '../model/login-account'
 import { NgForm } from '@angular/forms'
 import validateUtils from '@utils/validate.util'
-import { LoginService } from '@services/login/login.service'
+import { LoginService } from '@services/business/login.service'
 
 @Component({
   selector: 'app-login-account',
