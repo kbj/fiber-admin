@@ -7,8 +7,10 @@
     [columnKeyValueMap]="tableKeyValue"
     [requestUrl]="'system/role/list'"
     [commendColum]="commendColumn"
-    [toolbar]="toolbar"
     [(loading)]="loading"
+    [showCheckboxColum]="true"
+    [addForm]="toolbar"
+    [editForm]="toolbar"
   ></app-table-list>
 
   <!--列表操作列插槽-->

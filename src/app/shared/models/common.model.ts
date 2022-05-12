@@ -26,6 +26,7 @@ export interface CommonTableKeyValueModel {
   showSort?: boolean
   sortOrder?: NzTableSortOrder //默认排序顺序
   sortFn?: NzTableSortFn<any> | boolean // 排序方法，true代表服务器排序
+  ellipsis?: boolean // 是否需要让单元格内容根据宽度自动省略(...)
 }
 
 /**

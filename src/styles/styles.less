@@ -36,3 +36,13 @@ html {
 .t-a-r {
   text-align: right;
 }
+
+.space-between {
+  .center-fn(space-between);
+}
+
+.center-fn(@col:center,@row:center) {
+  display: flex;
+  justify-content: @col;
+  align-items: @row;
+}

@@ -31,10 +31,13 @@ export class TableListComponent implements OnInit, OnChanges {
   @Input() requestUrl: string = '' // 列表数据接口请求地址
   @Input() title: string = '查询表格' // 表格抬头名称
   @Input() commendColum: TemplateRef<NzSafeAny> | null = null // 操作栏插槽
-  @Input() toolbar: TemplateRef<NzSafeAny> | null = null // 工具栏插槽
+  @Input() addForm: TemplateRef<NzSafeAny> | null = null // 新增按钮点开展示内容插槽
+  @Input() editForm: TemplateRef<NzSafeAny> | null = null // 修改按钮点开展示内容插槽
   @Input() loading: boolean = false // 加载状态
   @Output() loadingChange = new EventEmitter<boolean>() // 加载状态改变事件，构建双向绑定
   @Input() loadingDelay = 100 // 加载动画延迟，防止闪烁
+  @Input() showCheckboxColum: boolean = true // 是否展示选择列
+  @Output() deleteBtnClick = new EventEmitter<number[]>() // 批量删除按钮点击后发出的事件
 
   /**
    * 初始化请求数据
@@ -49,6 +52,16 @@ export class TableListComponent implements OnInit, OnChanges {
     { name: '中等', selected: false, value: 'middle' },
     { name: '紧凑', selected: false, value: 'small' }
   ]
+
+  /**
+   * 全选框是否处于半选择状态
+   */
+  allCheckedIndeterminate = false
+
+  /**
+   * checkbox是否是全选
+   */
+  allChecked = false
 
   /**
    * 缓存每次请求的参数，用于刷新按钮附带请求
@@ -131,5 +144,41 @@ export class TableListComponent implements OnInit, OnChanges {
    */
   changeTableSize(value: NzTableSize) {
     this.tableSizeProps.forEach((item) => (item.selected = item.value === value))
+  }
+
+  /**
+   * 多选checkbox选中回调
+   */
+  allCheckedChange(checked: boolean) {
+    this.allChecked = checked
+    this.listData?.records.forEach((item) => (item._checked = checked))
+  }
+
+  /**
+   * 单独数据行的checkbox回调
+   */
+  itemCheckedChange(checked: boolean, data: any) {
+    data._checked = checked
+
+    // 检查全部的数据，更改标题的全选的状态
+    let check = 0
+    let notCheck = 0
+    this.listData?.records.forEach((item) => {
+      if (item._checked && item._checked === true) {
+        check++
+      } else {
+        notCheck++
+      }
+    })
+    if (check === 0) {
+      this.allChecked = false
+      this.allCheckedIndeterminate = false
+    } else if (check > 0 && notCheck > 0) {
+      this.allChecked = false
+      this.allCheckedIndeterminate = true
+    } else {
+      this.allChecked = true
+      this.allCheckedIndeterminate = false
+    }
   }
 }

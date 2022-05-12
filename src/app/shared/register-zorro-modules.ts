@@ -17,6 +17,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
 import { NzResizableModule } from 'ng-zorro-antd/resizable'
+import { NzPopoverModule } from 'ng-zorro-antd/popover'
 
 /**
  * 提供统一的ng-zorro组件引入
@@ -40,5 +41,6 @@ export const ZorroModules = [
   NzSpaceModule,
   NzDividerModule,
   NzToolTipModule,
-  NzResizableModule
+  NzResizableModule,
+  NzPopoverModule
 ]
