@@ -11,7 +11,9 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoleComponent implements OnInit {
-  // 列表组件
+  /**
+   * 列表组件
+   */
   @ViewChild(TableListComponent)
   private tableListComponent!: TableListComponent
 
@@ -76,12 +78,8 @@ export class RoleComponent implements OnInit {
   query(formValue: NzSafeAny) {
     // 时间处理，时分秒都置零
     if (formValue.createAt && formValue.createAt.length > 0) {
-      const startTime = formValue.createAt[0] as Date
-      const endTime = formValue.createAt[1] as Date
-      startTime.setHours(0, 0, 0, 0)
-      endTime.setHours(0, 0, 0, 0)
-      formValue.createAt[0] = startTime
-      formValue.createAt[1] = endTime
+      formValue.createAt[0] = (formValue.createAt[0] as Date).setHours(0, 0, 0, 0)
+      formValue.createAt[1] = (formValue.createAt[1] as Date).setHours(0, 0, 0, 0)
     }
     this.tableListComponent.requestTableData(formValue)
   }

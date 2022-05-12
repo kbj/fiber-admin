@@ -14,6 +14,7 @@
       [nzPageSize]="listData.pageSize"
       [nzPageIndex]="listData.current"
       [nzShowTotal]="pageTotalInfo"
+      [nzSize]="tableSize"
     >
       <!--标题展示-->
       <thead>
@@ -71,9 +72,9 @@
 
         <nz-space nzSize="middle">
           <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="reload" [nzSpin]="loading" nzTheme="outline"
-             nz-tooltip nzTooltipTitle="刷新"></i>
+             nz-tooltip nzTooltipTitle="刷新" (click)="refresh()"></i>
           <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="column-height" nzTheme="outline" nz-tooltip
-             nzTooltipTitle="密度"></i>
+             nzTooltipTitle="密度" nz-dropdown [nzDropdownMenu]="tableSizeMenu"></i>
           <i class="hand-model hover-color" *nzSpaceItem nz-icon nzType="setting" nzTheme="outline" nz-tooltip
              nzTooltipTitle="列设置"></i>
         </nz-space>
@@ -81,3 +82,13 @@
     </div>
   </ng-template>
 </div>
+
+<!--列表密度插槽-->
+<nz-dropdown-menu #tableSizeMenu>
+  <ul nz-menu>
+    <li nz-menu-item (click)="changeTableSize(item.value)" [nzSelected]="item.selected"
+        *ngFor="let item of tableSizeProps">
+      <span>{{item.name}}</span>
+    </li>
+  </ul>
+</nz-dropdown-menu>
