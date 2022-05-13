@@ -33,6 +33,8 @@ export class TableListComponent implements OnInit, OnChanges {
   @Input() commendColum: TemplateRef<NzSafeAny> | null = null // 操作栏插槽
   @Input() addForm: TemplateRef<NzSafeAny> | null = null // 新增按钮点开展示内容插槽
   @Input() editForm: TemplateRef<NzSafeAny> | null = null // 修改按钮点开展示内容插槽
+  @Input() allowDelete: boolean = true // 是否允许删除
+  @Input() toolbarTemplate: TemplateRef<NzSafeAny> | null = null // 工具栏自定义插槽
   @Input() loading: boolean = false // 加载状态
   @Output() loadingChange = new EventEmitter<boolean>() // 加载状态改变事件，构建双向绑定
   @Input() loadingDelay = 100 // 加载动画延迟，防止闪烁
@@ -95,7 +97,7 @@ export class TableListComponent implements OnInit, OnChanges {
    */
   requestTableData(requestParam: NzSafeAny) {
     // 加载数据promise
-    const dataPromise = this.tableService.getTableList<NzSafeAny>(this.requestUrl, requestParam)
+    const dataPromise = this.tableService.getTableList<NzSafeAny>(this.requestUrl + '/list', requestParam)
 
     // 为了防止加载动画闪烁，延迟loading变量更改
     const timeout = () =>
@@ -193,7 +195,15 @@ export class TableListComponent implements OnInit, OnChanges {
       this.allChecked = true
       this.allCheckedIndeterminate = false
     }
+  }
 
-    // 检查
+  /**
+   * 删除按钮点击事件
+   */
+  async deleteItem(id: number[]) {
+    const result = await this.tableService.deleteItems(this.requestUrl, id)
+    if (result.code === 0) {
+      this.refresh()
+    }
   }
 }

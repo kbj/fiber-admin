@@ -1,8 +1,9 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http'
-import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
-import {environment} from '../../../environments/environment'
-import {UserStoreService} from '@store/user-store.service'
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Observable, timeout } from 'rxjs'
+import { environment } from '../../../environments/environment'
+import { UserStoreService } from '@store/user-store.service'
+import Constant from '@core/config/constant.config'
 
 /**
  * 为每个HTTP请求添加基础请求地址的拦截器
@@ -21,6 +22,6 @@ export class RequestInterceptor implements HttpInterceptor {
       headers: req.headers.set('Authorization', 'Bearer ' + this.userStore.token.getValue())
     })
 
-    return next.handle(newReq)
+    return next.handle(newReq).pipe(timeout(Constant.HTTP_DEFAULT_TIMEOUT))
   }
 }

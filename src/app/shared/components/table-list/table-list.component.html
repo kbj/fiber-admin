@@ -47,7 +47,7 @@
           </th>
 
           <!--操作列-->
-          <th *ngIf="commendColum" nzAlign="center">操作</th>
+          <th *ngIf="editForm || allowDelete || commendColum" nzAlign="center">操作</th>
         </tr>
       </thead>
 
@@ -74,7 +74,17 @@
           </td>
 
           <!--操作列-->
-          <td *ngIf="commendColum" nzAlign="center">
+          <td nzAlign="center" *ngIf="editForm || allowDelete || commendColum">
+            <span class="operate-text" *ngIf="editForm"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
+            <span
+              class="operate-text"
+              *ngIf="allowDelete"
+              nz-popconfirm
+              nzPopconfirmTitle="您确认要删除吗？"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteItem([data.id])"
+              ><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span
+            >
             <ng-container *ngTemplateOutlet="commendColum; context: { $implicit: data }"></ng-container>
           </td>
         </tr>
@@ -90,6 +100,11 @@
   <!--工具栏汇总-->
   <ng-template #tableToolbar>
     <div class="toolbar">
+      <!--自定义工具栏-->
+      <ng-container *ngIf="toolbarTemplate">
+        <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
+      </ng-container>
+
       <nz-space nzSize="middle">
         <!--新增按钮-->
         <ng-container *ngIf="addForm">
@@ -102,8 +117,19 @@
         </ng-container>
 
         <!--删除按钮-->
-        <ng-container *ngIf="showCheckboxColum && checkedIds.length === 1">
-          <button *nzSpaceItem nz-button nzType="default" nzDanger><i nz-icon nzType="delete"></i>删除</button>
+        <ng-container *ngIf="showCheckboxColum && checkedIds.length > 0 && allowDelete">
+          <button
+            *nzSpaceItem
+            nz-button
+            nzType="default"
+            nzDanger
+            nz-popconfirm
+            nzPopconfirmTitle="您确认要删除吗？"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="deleteItem(checkedIds)"
+          >
+            <i nz-icon nzType="delete"></i>删除
+          </button>
         </ng-container>
       </nz-space>
 
