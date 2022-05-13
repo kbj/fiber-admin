@@ -64,6 +64,11 @@ export class TableListComponent implements OnInit, OnChanges {
   allChecked = false
 
   /**
+   * 选择列选中的ID数组
+   */
+  checkedIds: number[] = []
+
+  /**
    * 缓存每次请求的参数，用于刷新按钮附带请求
    */
   private cacheFormValue: NzSafeAny = null
@@ -151,7 +156,13 @@ export class TableListComponent implements OnInit, OnChanges {
    */
   allCheckedChange(checked: boolean) {
     this.allChecked = checked
-    this.listData?.records.forEach((item) => (item._checked = checked))
+    this.checkedIds.length = 0
+    this.listData?.records.forEach((item) => {
+      item._checked = checked
+      if (checked) {
+        this.checkedIds.push(item.id)
+      }
+    })
   }
 
   /**
@@ -159,6 +170,7 @@ export class TableListComponent implements OnInit, OnChanges {
    */
   itemCheckedChange(checked: boolean, data: any) {
     data._checked = checked
+    this.checkedIds.length = 0
 
     // 检查全部的数据，更改标题的全选的状态
     let check = 0
@@ -166,6 +178,7 @@ export class TableListComponent implements OnInit, OnChanges {
     this.listData?.records.forEach((item) => {
       if (item._checked && item._checked === true) {
         check++
+        this.checkedIds.push(item.id)
       } else {
         notCheck++
       }
@@ -180,5 +193,7 @@ export class TableListComponent implements OnInit, OnChanges {
       this.allChecked = true
       this.allCheckedIndeterminate = false
     }
+
+    // 检查
   }
 }

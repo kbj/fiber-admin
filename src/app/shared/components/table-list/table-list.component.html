@@ -97,12 +97,12 @@
         </ng-container>
 
         <!--修改按钮-->
-        <ng-container *ngIf="editForm">
+        <ng-container *ngIf="editForm && checkedIds.length === 1">
           <button *nzSpaceItem nz-button nzType="default"><i nz-icon nzType="edit"></i>修改</button>
         </ng-container>
 
         <!--删除按钮-->
-        <ng-container *ngIf="showCheckboxColum">
+        <ng-container *ngIf="showCheckboxColum && checkedIds.length === 1">
           <button *nzSpaceItem nz-button nzType="default" nzDanger><i nz-icon nzType="delete"></i>删除</button>
         </ng-container>
       </nz-space>
