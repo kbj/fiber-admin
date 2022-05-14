@@ -73,9 +73,16 @@ export class TableListComponent implements OnInit, OnChanges {
   /**
    * 缓存每次请求的参数，用于刷新按钮附带请求
    */
-  private cacheFormValue: NzSafeAny = null
+  cacheFormValue: NzSafeAny = null
 
-  ngOnInit(): void {}
+  /**
+   * 缓存输入的列顺序结构，用于列设置里面更改
+   */
+  cacheColumnKeyValue: CommonTableKeyValueModel[] = []
+
+  ngOnInit(): void {
+    this.cacheColumnKeyValue = [...this.columnKeyValueMap]
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     // 监听数据改变了取消加载框
@@ -202,8 +209,16 @@ export class TableListComponent implements OnInit, OnChanges {
    */
   async deleteItem(id: number[]) {
     const result = await this.tableService.deleteItems(this.requestUrl, id)
-    if (result.code === 0) {
+    if (result) {
       this.refresh()
     }
+  }
+
+  /**
+   * 控制每列的展示隐藏
+   */
+  changeColumnHide(checked: boolean, item: CommonTableKeyValueModel) {
+    item.hide = !checked
+    this.cdr.markForCheck()
   }
 }

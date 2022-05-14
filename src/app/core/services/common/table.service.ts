@@ -28,8 +28,15 @@ export class TableService {
    */
   deleteItems(url: string, id: number[]) {
     const messageId = this.messageService.loading('正在删除', { nzDuration: 10000 }).messageId
-    return lastValueFrom(this.http.delete<ResponseModel<any>>(url + `/${id}`)).finally(() =>
-      this.messageService.remove(messageId)
-    )
+    return lastValueFrom(this.http.delete<ResponseModel<any>>(url + `/${id}`))
+      .then((resp) => {
+        if (resp.code === 0) {
+          this.messageService.success('删除成功')
+          return true
+        } else {
+          return false
+        }
+      })
+      .finally(() => this.messageService.remove(messageId))
   }
 }

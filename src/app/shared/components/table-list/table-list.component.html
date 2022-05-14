@@ -31,20 +31,22 @@
           ></th>
 
           <!--业务列-->
-          <th
-            *ngFor="let item of columnKeyValueMap"
-            nzAlign="center"
-            [nzWidth]="!item.width ? null : item.width + 'px'"
-            [nzShowSort]="item.showSort"
-            [nzSortOrder]="item.sortOrder ? item.sortOrder : null"
-            [nzSortFn]="item.sortFn ? item.sortFn : null"
-            nz-resizable
-            nzPreview
-            [nzMaxWidth]="1200"
-            [nzMinWidth]="80"
-          >
-            {{ item.name }}
-          </th>
+          <ng-container *ngFor="let item of cacheColumnKeyValue">
+            <th
+              *ngIf="item.hide === undefined || item.hide === false"
+              nzAlign="center"
+              [nzWidth]="!item.width ? null : item.width + 'px'"
+              [nzShowSort]="item.showSort"
+              [nzSortOrder]="item.sortOrder ? item.sortOrder : null"
+              [nzSortFn]="item.sortFn ? item.sortFn : null"
+              nz-resizable
+              nzPreview
+              [nzMaxWidth]="1200"
+              [nzMinWidth]="80"
+            >
+              {{ item.name }}
+            </th>
+          </ng-container>
 
           <!--操作列-->
           <th *ngIf="editForm || allowDelete || commendColum" nzAlign="center">操作</th>
@@ -65,19 +67,21 @@
           ></td>
 
           <!--业务列-->
-          <td
-            [nzAlign]="item.align ? item.align : 'center'"
-            *ngFor="let item of columnKeyValueMap"
-            [nzEllipsis]="item.ellipsis ? item.ellipsis : false"
-          >
-            {{ getColumnValue(item, data) }}
-          </td>
+          <ng-container *ngFor="let item of cacheColumnKeyValue">
+            <td
+              *ngIf="item.hide === undefined || item.hide === false"
+              [nzAlign]="item.align ? item.align : 'center'"
+              [nzEllipsis]="item.ellipsis ? item.ellipsis : false"
+            >
+              {{ getColumnValue(item, data) }}
+            </td>
+          </ng-container>
 
           <!--操作列-->
           <td nzAlign="center" *ngIf="editForm || allowDelete || commendColum">
-            <span class="operate-text" *ngIf="editForm"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
+            <span class="operate-text m-r-1" *ngIf="editForm"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
             <span
-              class="operate-text"
+              class="operate-text m-r-1"
               *ngIf="allowDelete"
               nz-popconfirm
               nzPopconfirmTitle="您确认要删除吗？"
@@ -196,11 +200,8 @@
 
 <!--列设置弹出气泡标题模板-->
 <ng-template #columSettingTitleTemplate>
-  <div class="space-between">
-    <nz-space>
-      <label nz-checkbox *nzSpaceItem>勾选列</label>
-      <label nz-checkbox *nzSpaceItem>列展示</label>
-    </nz-space>
+  <div class="space-between p-0">
+    <label nz-checkbox>列展示</label>
 
     <button class="operate-text" nz-button nzType="text">重置</button>
   </div>
@@ -208,5 +209,39 @@
 
 <!--列设置弹出气泡内容模板-->
 <ng-template #columSettingContentTemplate>
-  <div style="min-width: 31.5rem">内容</div>
+  <ul cdkDropList style="min-width: 31.5rem; padding-left: 0">
+    <li cdkDrag class="space-between" *ngFor="let item of cacheColumnKeyValue" style="margin-top: 0.5rem">
+      <!--列名-->
+      <div>
+        <i nz-icon nzType="drag" nzTheme="outline"></i>
+        <label
+          nz-checkbox
+          [nzChecked]="!item.hide"
+          style="margin-left: 0.5rem"
+          (nzCheckedChange)="changeColumnHide($event, item)"
+          >{{ item.name }}</label
+        >
+      </div>
+
+      <div>
+        <i
+          class="hand-model"
+          nz-tooltip
+          nzTooltipTitle="固定到左侧"
+          nz-icon
+          nzType="vertical-right"
+          nzTheme="outline"
+        ></i>
+        <nz-divider nzType="vertical"></nz-divider>
+        <i
+          class="hand-model"
+          nz-tooltip
+          nzTooltipTitle="固定到右侧"
+          nz-icon
+          nzType="vertical-left"
+          nzTheme="outline"
+        ></i>
+      </div>
+    </li>
+  </ul>
 </ng-template>
