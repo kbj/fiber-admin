@@ -5,21 +5,31 @@
   <!--角色列表-->
   <app-table-list
     [columnKeyValueMap]="tableKeyValue"
-    [requestUrl]="'system/role'"
-    [(loading)]="loading"
+    [loading]="loading"
     [showCheckboxColum]="true"
-    [addForm]="toolbar"
-    [editForm]="toolbar"
+    [lists]="results"
+    [toolbarTemplate]="toolbarTemplate"
+    [commendTemplate]="commendTemplate"
+    (multiDeleteBtnClick)="deleteItem($event)"
+    (refreshBtnClick)="refreshQuery()"
   ></app-table-list>
 
   <!--列表操作列插槽-->
-  <ng-template #commendColumn let-data>
-    <span class="operate-text"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
-    <span class="operate-text"><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span>
+  <ng-template #commendTemplate let-data>
+    <span class="operate-text m-r-1"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
+    <span
+      class="operate-text"
+      nz-popconfirm
+      nzPopconfirmTitle="您确认要删除吗？"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="deleteItem([data.id])"
+    >
+      <i nz-icon nzType="delete" nzTheme="outline"></i>删除
+    </span>
   </ng-template>
 
   <!--列表抬头工具栏插槽-->
-  <ng-template #toolbar>
+  <ng-template #toolbarTemplate>
     <nz-space nzSize="middle">
       <button *nzSpaceItem nz-button nzType="primary"><i nz-icon nzType="plus"></i>新增</button>
     </nz-space>

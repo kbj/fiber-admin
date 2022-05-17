@@ -3,18 +3,19 @@
   <nz-card class="table-list" [nzBordered]="false" [nzTitle]="title" [nzExtra]="tableToolbar">
     <nz-table
       #table
-      [nzData]="listData.records"
+      [nzData]="lists.records"
       nzShowPagination
       nzOuterBordered
       [nzLoading]="loading"
       nzTableLayout="fixed"
       [nzFrontPagination]="false"
       [nzLoadingDelay]="loadingDelay"
-      [nzTotal]="listData.total"
-      [nzPageSize]="listData.pageSize"
-      [nzPageIndex]="listData.current"
+      [nzTotal]="lists.total"
+      [nzPageSize]="lists.pageSize"
+      [nzPageIndex]="lists.current"
       [nzShowTotal]="pageTotalInfo"
       [nzSize]="tableSize"
+      [nzScroll]="{ x: '110rem' }"
     >
       <!--标题展示-->
       <thead>
@@ -30,17 +31,19 @@
             (nzCheckedChange)="allCheckedChange($event)"
           ></th>
 
-          <!--业务列-->
+          <!--列-->
           <ng-container *ngFor="let item of cacheColumnKeyValue">
             <th
-              *ngIf="item.hide === undefined || item.hide === false"
+              *ngIf="item.checked"
               nzAlign="center"
-              [nzWidth]="!item.width ? null : item.width + 'px'"
-              [nzShowSort]="item.showSort"
-              [nzSortOrder]="item.sortOrder ? item.sortOrder : null"
-              [nzSortFn]="item.sortFn ? item.sortFn : null"
+              [nzWidth]="!item.source.width ? null : item.source.width + 'px'"
+              [nzShowSort]="item.source.showSort"
+              [nzSortOrder]="item.source.sortOrder ? item.source.sortOrder : null"
+              [nzSortFn]="item.source.sortFn ? item.source.sortFn : null"
               nz-resizable
               nzPreview
+              [nzLeft]="item.fixed === 'left'"
+              [nzRight]="item.fixed === 'right'"
               [nzMaxWidth]="1200"
               [nzMinWidth]="80"
             >
@@ -49,7 +52,7 @@
           </ng-container>
 
           <!--操作列-->
-          <th *ngIf="editForm || allowDelete || commendColum" nzAlign="center">操作</th>
+          <th *ngIf="commendTemplate" nzRight nzAlign="center">操作</th>
         </tr>
       </thead>
 
@@ -62,34 +65,26 @@
             *ngIf="showCheckboxColum"
             nzEllipsis
             nzLeft
-            [nzChecked]="data['_checked']"
-            (nzCheckedChange)="itemCheckedChange($event, data)"
+            [nzChecked]="!!listsCheckedMap.get(data.id)"
+            (nzCheckedChange)="itemCheckedChange($event, data.id)"
           ></td>
 
           <!--业务列-->
           <ng-container *ngFor="let item of cacheColumnKeyValue">
             <td
-              *ngIf="item.hide === undefined || item.hide === false"
-              [nzAlign]="item.align ? item.align : 'center'"
-              [nzEllipsis]="item.ellipsis ? item.ellipsis : false"
+              *ngIf="item.checked"
+              [nzLeft]="item.fixed === 'left'"
+              [nzRight]="item.fixed === 'right'"
+              [nzAlign]="item.source.align ? item.source.align : 'center'"
+              [nzEllipsis]="item.source.ellipsis ? item.source.ellipsis : false"
             >
-              {{ getColumnValue(item, data) }}
+              {{ getColumnValue(item.source, data) }}
             </td>
           </ng-container>
 
           <!--操作列-->
-          <td nzAlign="center" *ngIf="editForm || allowDelete || commendColum">
-            <span class="operate-text m-r-1" *ngIf="editForm"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</span>
-            <span
-              class="operate-text m-r-1"
-              *ngIf="allowDelete"
-              nz-popconfirm
-              nzPopconfirmTitle="您确认要删除吗？"
-              nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="deleteItem([data.id])"
-              ><i nz-icon nzType="delete" nzTheme="outline"></i>删除</span
-            >
-            <ng-container *ngTemplateOutlet="commendColum; context: { $implicit: data }"></ng-container>
+          <td nzAlign="center" *ngIf="commendTemplate" nzRight>
+            <ng-container *ngTemplateOutlet="commendTemplate; context: { $implicit: data }"></ng-container>
           </td>
         </tr>
       </tbody>
@@ -105,39 +100,33 @@
   <ng-template #tableToolbar>
     <div class="toolbar">
       <!--自定义工具栏-->
-      <ng-container *ngIf="toolbarTemplate">
-        <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
-      </ng-container>
-
-      <nz-space nzSize="middle">
-        <!--新增按钮-->
-        <ng-container *ngIf="addForm">
-          <button *nzSpaceItem nz-button nzType="primary"><i nz-icon nzType="plus"></i>新增</button>
-        </ng-container>
-
-        <!--修改按钮-->
-        <ng-container *ngIf="editForm && checkedIds.length === 1">
-          <button *nzSpaceItem nz-button nzType="default"><i nz-icon nzType="edit"></i>修改</button>
+      <nz-space>
+        <ng-container *ngIf="toolbarTemplate" class="m-r-1">
+          <ng-container *nzSpaceItem>
+            <ng-container *ngTemplateOutlet="toolbarTemplate"></ng-container>
+          </ng-container>
         </ng-container>
 
         <!--删除按钮-->
-        <ng-container *ngIf="showCheckboxColum && checkedIds.length > 0 && allowDelete">
+        <ng-container *ngIf="showCheckboxColum && checkedIds.length > 0 && showMultiDeleteBtn">
           <button
             *nzSpaceItem
             nz-button
             nzType="default"
-            nzDanger
             nz-popconfirm
             nzPopconfirmTitle="您确认要删除吗？"
             nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="deleteItem(checkedIds)"
+            (nzOnConfirm)="multiDeleteBtnClick.emit(checkedIds)"
           >
             <i nz-icon nzType="delete"></i>删除
           </button>
         </ng-container>
       </nz-space>
 
-      <nz-divider nzType="vertical" *ngIf="addForm || editForm || showCheckboxColum"></nz-divider>
+      <nz-divider
+        nzType="vertical"
+        *ngIf="toolbarTemplate || (showCheckboxColum && checkedIds.length > 0 && showMultiDeleteBtn)"
+      ></nz-divider>
 
       <!--图标按钮-->
       <nz-space nzSize="middle">
@@ -201,22 +190,33 @@
 <!--列设置弹出气泡标题模板-->
 <ng-template #columSettingTitleTemplate>
   <div class="space-between p-0">
-    <label nz-checkbox>列展示</label>
+    <label
+      nz-checkbox
+      (nzCheckedChange)="allColumnCheckedChange($event)"
+      [nzChecked]="allColumnChecked"
+      [nzIndeterminate]="allColumnCheckedIndeterminate"
+      >列展示</label
+    >
 
-    <button class="operate-text" nz-button nzType="text">重置</button>
+    <button class="operate-text" nz-button nzType="text" (click)="resetColumnSetting()">重置</button>
   </div>
 </ng-template>
 
 <!--列设置弹出气泡内容模板-->
 <ng-template #columSettingContentTemplate>
-  <ul cdkDropList style="min-width: 31.5rem; padding-left: 0">
-    <li cdkDrag class="space-between" *ngFor="let item of cacheColumnKeyValue" style="margin-top: 0.5rem">
+  <ul cdkDropList (cdkDropListDropped)="dropTableListChange($event)" style="min-width: 31.5rem; padding-left: 0">
+    <li
+      cdkDrag
+      class="space-between"
+      *ngFor="let item of cacheColumnKeyValue; let i = index"
+      style="margin-top: 0.5rem"
+    >
       <!--列名-->
       <div>
         <i nz-icon nzType="drag" nzTheme="outline"></i>
         <label
           nz-checkbox
-          [nzChecked]="!item.hide"
+          [nzChecked]="item.checked"
           style="margin-left: 0.5rem"
           (nzCheckedChange)="changeColumnHide($event, item)"
           >{{ item.name }}</label
@@ -229,8 +229,10 @@
           nz-tooltip
           nzTooltipTitle="固定到左侧"
           nz-icon
+          [ngClass]="{ 'active-color': item.fixed === 'left' }"
           nzType="vertical-right"
           nzTheme="outline"
+          (click)="fixed(item, i, 'left')"
         ></i>
         <nz-divider nzType="vertical"></nz-divider>
         <i
@@ -238,6 +240,8 @@
           nz-tooltip
           nzTooltipTitle="固定到右侧"
           nz-icon
+          [ngClass]="{ 'active-color': item.fixed === 'right' }"
+          (click)="fixed(item, i, 'right')"
           nzType="vertical-left"
           nzTheme="outline"
         ></i>

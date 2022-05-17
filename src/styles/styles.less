@@ -7,8 +7,15 @@ html {
   font-size: 62.5%;
 }
 
+// 主题色
+@theme-active-color: #409eff;
+
 .hand-model {
   cursor: pointer;
+}
+
+.active-color {
+  color: @theme-active-color;
 }
 
 .hand-model-move {
@@ -17,11 +24,11 @@ html {
 
 .operate-text {
   .hand-model;
-  color: #409eff;
+  .active-color;
 }
 
 .hover-color:hover {
-  color: #409eff;
+  color: @theme-active-color;
 }
 
 .m-b-1 {
