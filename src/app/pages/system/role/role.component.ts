@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
-import { CommonTableKeyValueModel, CommonTableSearchFormModel } from '@shared/models/common.model'
-import Constant from '@core/config/constant.config'
 import { NzSafeAny } from 'ng-zorro-antd/core/types'
 import { RoleService } from '@services/business/role.service'
 import { PageModel } from '@shared/models/response.model'
@@ -8,6 +6,7 @@ import { finalize, takeUntil } from 'rxjs'
 import pageUtil from '@utils/page.util'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { DestroyService } from '@services/common/destroy.service'
+import { queryForm, tableConfig } from './config'
 
 @Component({
   selector: 'app-role',
@@ -23,56 +22,10 @@ export class RoleComponent implements OnInit {
   loading: boolean = false
 
   /**
-   * 列表参数结构定义
+   * 列表与搜索表单结构定义
    */
-  tableKeyValue: CommonTableKeyValueModel[] = [
-    {
-      name: '编码',
-      value: 'id',
-      align: 'center',
-      showSort: true,
-      sortFn: (a: any, b: any) => a.id - b.id
-    },
-    {
-      name: '角色名称',
-      value: 'roleName',
-      align: 'center'
-    },
-    {
-      name: '角色编码',
-      value: 'roleCode',
-      align: 'center'
-    },
-    {
-      name: '创建时间',
-      value: 'createAt',
-      type: 'date',
-      align: 'center',
-      format: Constant.YYYY_MM_DD_HH_MM_SS
-    }
-  ]
-
-  /**
-   * 列表搜索表单
-   */
-  queryForm: CommonTableSearchFormModel[] = [
-    {
-      name: '角色名称',
-      value: 'roleName',
-      type: 'input'
-    },
-    {
-      name: '角色编码',
-      value: 'roleCode',
-      type: 'input'
-    },
-    {
-      name: '创建时间',
-      value: 'createAt',
-      type: 'date-range',
-      format: 'yyyy/MM/dd'
-    }
-  ]
+  tableKeyValue = tableConfig
+  queryForm = queryForm
 
   /**
    * 角色列表数据
