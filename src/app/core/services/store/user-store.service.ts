@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core'
-import {BehaviorSubject} from 'rxjs'
-import {UserInfo} from '@shared/models/user.model'
-import {MenuTreeModel} from '@shared/models/menu.model'
+import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
+import { UserInfo } from '@shared/models/user.model'
+import { MenuTreeModel } from '@shared/models/menu.model'
 
 /**
  * 用户相关的存储
@@ -46,13 +46,13 @@ export class UserStoreService {
   }
 
   // 登录用户的token
-  private _token = new BehaviorSubject<String | undefined>(undefined)
+  private _token = new BehaviorSubject<string | undefined>(undefined)
 
-  get token(): BehaviorSubject<String | undefined> {
+  get token(): BehaviorSubject<string | undefined> {
     return this._token
   }
 
-  set token(value: BehaviorSubject<String | undefined>) {
+  set token(value: BehaviorSubject<string | undefined>) {
     this._token = value
   }
 

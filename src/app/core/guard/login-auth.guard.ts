@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core'
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router'
-import {Observable} from 'rxjs'
-import {UserStoreService} from '@store/user-store.service'
+import { Injectable } from '@angular/core'
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router'
+import { Observable } from 'rxjs'
+import { UserStoreService } from '@store/user-store.service'
 
 /**
  * 用户登录状态检查的路由守卫

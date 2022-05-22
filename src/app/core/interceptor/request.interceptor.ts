@@ -15,12 +15,22 @@ export class RequestInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let baseUrl = environment.apiBaseUrl
 
-    const newReq = req.clone({
-      // 添加baseUrl
-      url: baseUrl + req.url,
-      // 添加请求头
-      headers: req.headers.set('Authorization', 'Bearer ' + this.userStore.token.getValue())
-    })
+    // 处理baseUrl与header
+    let newReq
+    const token = this.userStore.token.getValue()
+    if (token) {
+      newReq = req.clone({
+        // 添加baseUrl
+        url: baseUrl + req.url,
+        // 添加请求头
+        headers: req.headers.set(Constant.HEADER_Authorization, token)
+      })
+    } else {
+      newReq = req.clone({
+        // 添加baseUrl
+        url: baseUrl + req.url
+      })
+    }
 
     return next.handle(newReq).pipe(timeout(Constant.HTTP_DEFAULT_TIMEOUT))
   }

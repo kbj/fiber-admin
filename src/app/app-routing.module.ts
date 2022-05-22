@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   // 登录模块
   {
-    path: 'business',
+    path: 'login',
     loadChildren: () => import('@pages/login/login.module').then((m) => m.LoginModule)
   },
   // 主页面

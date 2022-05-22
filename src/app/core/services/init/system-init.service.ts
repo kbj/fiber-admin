@@ -39,7 +39,7 @@ export class SystemInitService {
     if (userInfo) {
       this.userStore.userInfo.next(userInfo)
     }
-    const token = localCache.getCache<String>(Constant.LocalStorageAuthorizationKey)
+    const token = localCache.getCache<string>(Constant.LocalStorageAuthorizationKey)
     if (token) {
       this.userStore.token.next(token)
     }

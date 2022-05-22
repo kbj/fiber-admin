@@ -43,11 +43,13 @@ export class LoginService {
         // 登录成功
         this.message.success(`欢迎您！${resp.data.name}`)
 
-        // 保存用户名和token
+        // 保存用户名
         this.userStore.userInfo.next(resp.data)
-        this.userStore.token.next(resp.data.token)
         if (loginAccount.rememberMe) {
-          localCache.setCache(Constant.LocalStorageAuthorizationKey, resp.data.token)
+          const token = this.userStore.token.getValue()
+          if (token) {
+            localCache.setCache(Constant.LocalStorageAuthorizationKey, token)
+          }
           localCache.setCache(Constant.LocalStorageUserInfoKey, resp.data)
         } else {
           localCache.deleteCache(Constant.LocalStorageAuthorizationKey)

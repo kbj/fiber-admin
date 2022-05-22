@@ -14,4 +14,6 @@ export default class Constant {
   public static NOT_COLLAPSE_ITEM_NUMBER = 3 // 列表查询表单中不需要展开的表单项数目
 
   public static HTTP_DEFAULT_TIMEOUT = 30000 // HTTP客户端的超时时间，单位毫秒
+
+  public static HEADER_Authorization = 'Authorization' // Header中的Token字段名
 }
