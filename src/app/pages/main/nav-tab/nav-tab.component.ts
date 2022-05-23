@@ -35,23 +35,22 @@ export class NavTabComponent implements OnInit {
       )
       .subscribe((data) => {
         const routeInfo = data as NavigationEnd
+        const url = routeInfo.urlAfterRedirects ? routeInfo.urlAfterRedirects : routeInfo.url
 
         // 添加到tab中
-        const menu = this.userStore.flatMenuList.getValue().find((menu) => menu.path === routeInfo.url)
+        const menu = this.userStore.flatMenuList.getValue().find((menu) => menu.path === url)
         if (menu) {
           this.navTabService.addTab({
             name: menu.name,
-            path: routeInfo.url
+            path: url
           })
 
           // 更新面包屑地址
-          this.userStore.breadcrumbLists.next(
-            routeUtil.generateBreadcrumb(routeInfo.url, this.userStore.menuTreeList.getValue())
-          )
+          this.userStore.breadcrumbLists.next(routeUtil.generateBreadcrumb(url, this.userStore.menuTreeList.getValue()))
         }
 
         // 更新当前激活的tab索引值
-        this.navTabService.updateTabIndex(routeInfo.url)
+        this.navTabService.updateTabIndex(url)
 
         // 通知页面更新
         this.cdr.markForCheck()

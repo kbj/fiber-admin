@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { catchError, map, Observable, retry } from 'rxjs'
+import { catchError, map, Observable } from 'rxjs'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import Constant from '@core/config/constant.config'
 import { UserStoreService } from '@store/user-store.service'
@@ -15,7 +15,6 @@ export class ResponseInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      retry(1),
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           // 接口返回状态码处理
