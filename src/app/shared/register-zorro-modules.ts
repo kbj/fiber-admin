@@ -20,6 +20,7 @@ import { NzResizableModule } from 'ng-zorro-antd/resizable'
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 import { DragDropModule } from '@angular/cdk/drag-drop'
+import { NzModalModule } from 'ng-zorro-antd/modal'
 
 /**
  * 提供统一的ng-zorro组件引入
@@ -46,5 +47,6 @@ export const ZorroModules = [
   NzResizableModule,
   NzPopoverModule,
   NzPopconfirmModule,
-  DragDropModule
+  DragDropModule,
+  NzModalModule
 ]

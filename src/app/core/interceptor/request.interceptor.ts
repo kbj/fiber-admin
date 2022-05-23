@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Observable, retry, timeout } from 'rxjs'
+import { Observable, timeout } from 'rxjs'
 import { environment } from '../../../environments/environment'
 import { UserStoreService } from '@store/user-store.service'
 import Constant from '@core/config/constant.config'
@@ -32,6 +32,6 @@ export class RequestInterceptor implements HttpInterceptor {
       })
     }
 
-    return next.handle(newReq).pipe(timeout(Constant.HTTP_DEFAULT_TIMEOUT), retry(1))
+    return next.handle(newReq).pipe(timeout(Constant.HTTP_DEFAULT_TIMEOUT))
   }
 }
