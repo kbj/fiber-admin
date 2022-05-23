@@ -56,6 +56,17 @@ export class UserStoreService {
     this._token = value
   }
 
+  // 是否记住登录
+  private _rememberMe = new BehaviorSubject<boolean>(false)
+
+  get rememberMe(): BehaviorSubject<boolean> {
+    return this._rememberMe
+  }
+
+  set rememberMe(value: BehaviorSubject<boolean>) {
+    this._rememberMe = value
+  }
+
   // 用户页面上的面包屑信息
   private _breadcrumbLists = new BehaviorSubject<string[]>([])
 

@@ -1,7 +1,7 @@
-import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router'
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router'
 import Constant from '@core/config/constant.config'
 import routeUtil from '@utils/route.util'
-import {NzSafeAny} from 'ng-zorro-antd/core/types'
+import { NzSafeAny } from 'ng-zorro-antd/core/types'
 
 /**
  * 重写创建逻辑实现路由服用
@@ -26,13 +26,13 @@ export class ReuseStrategy implements RouteReuseStrategy {
   // 是否允许复用路由
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     // 当是否缓存为false
-    return route.data[Constant.CacheKey] !== false
+    return route.data[Constant.ROUTE_DATA_CACHE_KEY] !== false
   }
 
   // 当路由离开时会触发，存储路由
   store(route: ActivatedRouteSnapshot, handle: NzSafeAny): void {
     // cache为false代表不需要缓存路由
-    if (route.data[Constant.CacheKey] === false) {
+    if (route.data[Constant.ROUTE_DATA_CACHE_KEY] === false) {
       return
     }
     // 处理当前需要缓存的路由是否是被关闭的路由
@@ -49,7 +49,7 @@ export class ReuseStrategy implements RouteReuseStrategy {
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     // 只缓存叶子路由
     if (
-      route.data[Constant.CacheKey] === false ||
+      route.data[Constant.ROUTE_DATA_CACHE_KEY] === false ||
       route.routeConfig?.children ||
       route.routeConfig?.loadChildren ||
       !ReuseStrategy._cacheRouters[routeUtil.simplifyUrl(routeUtil.getCurrentUrlByActivatedRoute(route))]
@@ -63,7 +63,7 @@ export class ReuseStrategy implements RouteReuseStrategy {
   // 是否允许还原路由
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
     return (
-      route.data[Constant.CacheKey] !== false &&
+      route.data[Constant.ROUTE_DATA_CACHE_KEY] !== false &&
       !route.routeConfig?.children &&
       !route.routeConfig?.loadChildren &&
       !!ReuseStrategy._cacheRouters[routeUtil.simplifyUrl(routeUtil.getCurrentUrlByActivatedRoute(route))]

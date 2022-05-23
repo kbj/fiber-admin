@@ -7,12 +7,11 @@ import { ResponseModel } from '@shared/models/response.model'
 import { UserInfo } from '@shared/models/user.model'
 import { OthersStoreService } from '@store/others-store.service'
 import { finalize } from 'rxjs'
-import localCache from '@utils/local-cache.util'
+import cacheUtil from '@utils/cache.util'
 import Constant from '@core/config/constant.config'
 import { UserStoreService } from '@store/user-store.service'
 import { MenuTreeModel } from '@shared/models/menu.model'
 import mapUtil from '@utils/map.util'
-import sessionCacheUtil from '@utils/session-cache.util'
 
 /**
  * 登录模块service
@@ -35,6 +34,10 @@ export class LoginService {
    * @param loginAccount 提交参数
    */
   accountLogin(loginAccount: LoginAccount) {
+    // 更新记住登录状态
+    this.userStore.rememberMe.next(loginAccount.rememberMe)
+    cacheUtil.setCache(Constant.CACHE_KEY_REMEMBER_ME, loginAccount.rememberMe)
+
     this.othersStore.globalSpin.next(true) // 显示全局加载框
     this.http
       .post<ResponseModel<UserInfo>>('login', loginAccount)
@@ -43,17 +46,14 @@ export class LoginService {
         // 登录成功
         this.message.success(`欢迎您！${resp.data.name}`)
 
-        // 保存用户名
+        // 保存用户信息和Token
         this.userStore.userInfo.next(resp.data)
+        cacheUtil.setCache(Constant.CACHE_KEY_USER_INFO, resp.data)
         if (loginAccount.rememberMe) {
-          const token = this.userStore.token.getValue()
-          if (token) {
-            localCache.setCache(Constant.LocalStorageAuthorizationKey, token)
-          }
-          localCache.setCache(Constant.LocalStorageUserInfoKey, resp.data)
+          cacheUtil.setCache(Constant.CACHE_KEY_USER_INFO, resp.data)
         } else {
-          localCache.deleteCache(Constant.LocalStorageAuthorizationKey)
-          localCache.deleteCache(Constant.LocalStorageUserInfoKey)
+          cacheUtil.deleteCache(Constant.CACHE_KEY_AUTHORIZATION)
+          cacheUtil.deleteCache(Constant.CACHE_KEY_USER_INFO)
         }
 
         // 跳转
@@ -70,12 +70,12 @@ export class LoginService {
       const treeList = resp.data ? resp.data : []
       const newTreeList = JSON.parse(JSON.stringify(treeList))
       this.userStore.menuTreeList.next(newTreeList)
-      sessionCacheUtil.setCache(Constant.SessionStorageMenuTreeListKey, treeList)
+      cacheUtil.setCache(Constant.CACHE_KEY_MENU_TREE_LIST, treeList, true)
 
       // 更新拍平的菜单列表
       const flatList = mapUtil.flatMenuTree(treeList)
       this.userStore.flatMenuList.next(flatList)
-      sessionCacheUtil.setCache(Constant.SessionStorageMenuListKey, flatList)
+      cacheUtil.setCache(Constant.CACHE_KEY_MENU_LIST, flatList, true)
     })
   }
 
@@ -84,8 +84,7 @@ export class LoginService {
    */
   logout() {
     // 清除localStorage
-    localCache.clearCache()
-    sessionCacheUtil.clearCache()
+    cacheUtil.clearCache()
 
     // 清空菜单树
     this.userStore.flatMenuList.next([])

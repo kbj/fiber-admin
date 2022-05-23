@@ -4,6 +4,7 @@ import { catchError, map, Observable, retry } from 'rxjs'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import Constant from '@core/config/constant.config'
 import { UserStoreService } from '@store/user-store.service'
+import cacheUtil from '@utils/cache.util'
 
 /**
  * 对接口返回值处理的拦截器
@@ -26,6 +27,9 @@ export class ResponseInterceptor implements HttpInterceptor {
           const authorization = event.headers.get(Constant.HEADER_Authorization)
           if (authorization) {
             this.userStore.token.next(authorization)
+
+            // 更新本地缓存
+            cacheUtil.setCache(Constant.CACHE_KEY_AUTHORIZATION, authorization, !this.userStore.rememberMe.getValue())
           }
         }
         return event

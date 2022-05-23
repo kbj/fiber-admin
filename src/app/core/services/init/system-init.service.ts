@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
 import { UserStoreService } from '@store/user-store.service'
-import localCache from '@utils/local-cache.util'
+import cacheUtil from '@utils/cache.util'
 import Constant from '@core/config/constant.config'
 import { UserInfo } from '@shared/models/user.model'
-import sessionCache from '@utils/session-cache.util'
 import { MenuTreeModel } from '@shared/models/menu.model'
 import { ActivatedRoute } from '@angular/router'
 import { WindowService } from '@services/common/window.service'
@@ -35,13 +34,19 @@ export class SystemInitService {
    * @private
    */
   private loadUserInfo() {
-    const userInfo = localCache.getCache<UserInfo>(Constant.LocalStorageUserInfoKey)
+    // 取出缓存
+    const userInfo = cacheUtil.getCache<UserInfo>(Constant.CACHE_KEY_USER_INFO)
+    const token = cacheUtil.getCache<string>(Constant.CACHE_KEY_AUTHORIZATION)
+    const rememberMe = cacheUtil.getCache<boolean>(Constant.CACHE_KEY_REMEMBER_ME)
+
     if (userInfo) {
       this.userStore.userInfo.next(userInfo)
     }
-    const token = localCache.getCache<string>(Constant.LocalStorageAuthorizationKey)
     if (token) {
       this.userStore.token.next(token)
+    }
+    if (rememberMe) {
+      this.userStore.rememberMe.next(rememberMe)
     }
   }
 
@@ -50,12 +55,12 @@ export class SystemInitService {
    * @private
    */
   private loadMenuInfo() {
-    const menuList = sessionCache.getCache<MenuTreeModel[]>(Constant.SessionStorageMenuListKey)
+    const menuList = cacheUtil.getCache<MenuTreeModel[]>(Constant.CACHE_KEY_MENU_LIST)
     if (menuList) {
       this.userStore.flatMenuList.next(menuList)
     }
 
-    const menuTreeList = sessionCache.getCache<MenuTreeModel[]>(Constant.SessionStorageMenuTreeListKey)
+    const menuTreeList = cacheUtil.getCache<MenuTreeModel[]>(Constant.CACHE_KEY_MENU_TREE_LIST)
     if (menuTreeList) {
       this.userStore.menuTreeList.next(menuTreeList)
     }
