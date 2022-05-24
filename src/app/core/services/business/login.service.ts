@@ -14,6 +14,7 @@ import { MenuTreeModel } from '@shared/models/menu.model'
 import mapUtil from '@utils/map.util'
 import { NavTabService } from '@services/common/nav-tab.service'
 import { ReuseStrategy } from '@services/common/reuse-strategy'
+import routeUtil from '@utils/route.util'
 
 /**
  * 登录模块service
@@ -108,8 +109,7 @@ export class LoginService {
         ReuseStrategy._cacheRouters[key].componentRef.destroy()
       }
       ReuseStrategy._cacheRouters = {}
-      // @ts-ignore
-      ReuseStrategy._closeRoute = this.activeRoute.snapshot['_routerState'].url
+      ReuseStrategy._closeRoute = routeUtil.getCurrentUrlByActivatedRoute(this.activeRoute.snapshot)
     }
 
     // 导航到登录页
