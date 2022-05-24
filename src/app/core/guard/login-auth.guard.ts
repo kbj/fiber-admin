@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router'
 import { Observable } from 'rxjs'
 import { UserStoreService } from '@store/user-store.service'
+import { LoginService } from '@services/business/login.service'
 
 /**
  * 用户登录状态检查的路由守卫
@@ -10,7 +11,7 @@ import { UserStoreService } from '@store/user-store.service'
   providedIn: 'root'
 })
 export class LoginAuthGuard implements CanActivate {
-  constructor(private router: Router, private userStore: UserStoreService) {}
+  constructor(private router: Router, private userStore: UserStoreService, private loginService: LoginService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -21,6 +22,7 @@ export class LoginAuthGuard implements CanActivate {
     if (token && token.length > 0) {
       return true
     }
-    return this.router.parseUrl('/login')
+    this.loginService.logout()
+    return false
   }
 }

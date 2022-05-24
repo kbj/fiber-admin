@@ -6,7 +6,7 @@ import { AuthGuard } from '@core/guard'
 const routes: Routes = [
   {
     path: '',
-    data: {},
+    data: { cache: false },
     component: MainComponent,
     canActivateChild: [...AuthGuard],
     children: [
@@ -17,15 +17,15 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then((m) => m.HomeModule)
+        loadChildren: () => import('@pages/home/home.module').then((m) => m.HomeModule)
       },
       {
         path: 'system/role',
-        loadChildren: () => import('../system/role/role.module').then((m) => m.RoleModule)
+        loadChildren: () => import('@pages/system/role/role.module').then((m) => m.RoleModule)
       },
       {
         path: 'system/menu',
-        loadChildren: () => import('../system/menu/menu.module').then((m) => m.MenuModule)
+        loadChildren: () => import('@pages/system/menu/menu.module').then((m) => m.MenuModule)
       }
     ]
   }

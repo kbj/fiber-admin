@@ -22,14 +22,9 @@ export class MainInitLoadingGuard implements CanActivate {
     private otherStore: OthersStoreService,
     private loginService: LoginService
   ) {
-    // 请求菜单
-    this.loginService.getMenuTreeList()
-
     // 监听菜单是否已经加载完毕
     this.userStore.flatMenuList.asObservable().subscribe((value) => {
-      if (value.length > 0) {
-        this.loadingSuccess.next(true)
-      }
+      this.loadingSuccess.next(value.length > 0)
     })
 
     this.loadingSuccess.asObservable().subscribe((load) => {
@@ -45,6 +40,11 @@ export class MainInitLoadingGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // 监控菜单树是否已经加载
     this.otherStore.globalSpin.next(true)
+    this.loadingSuccess.next(false)
+
+    // 请求菜单
+    this.loginService.getMenuTreeList()
+
     return this.loadingSuccess
   }
 }

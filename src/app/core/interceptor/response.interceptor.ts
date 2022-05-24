@@ -8,6 +8,7 @@ import cacheUtil from '@utils/cache.util'
 import { NzModalService } from 'ng-zorro-antd/modal'
 import { LoginService } from '@services/business/login.service'
 import { OthersStoreService } from '@store/others-store.service'
+import CustomHttpError from '@core/errors/http.error'
 
 /**
  * 对接口返回值处理的拦截器
@@ -28,11 +29,8 @@ export class ResponseInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           // 接口返回状态码处理
           const body = event.body
-          if (body && body.code === 40301) {
-            // 登录信息过期
-            this.handleLoginExpire()
-          } else if (!body || body.code !== 0) {
-            throw new Error(body.msg)
+          if (!body || body.code !== 0) {
+            throw new CustomHttpError(body.code, body.msg)
           }
 
           // 判断返回是否有token，来更新Token
@@ -46,7 +44,16 @@ export class ResponseInterceptor implements HttpInterceptor {
         return event
       }),
       catchError((err) => {
-        this.message.error(err.message)
+        if (err instanceof CustomHttpError) {
+          switch (err.code) {
+            case 40301:
+              // 登录信息过期
+              this.handleLoginExpire()
+              break
+            default:
+              this.message.error(err.message)
+          }
+        }
         throw err
       })
     )

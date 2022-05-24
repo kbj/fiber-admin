@@ -12,6 +12,8 @@ import Constant from '@core/config/constant.config'
 import { UserStoreService } from '@store/user-store.service'
 import { MenuTreeModel } from '@shared/models/menu.model'
 import mapUtil from '@utils/map.util'
+import { NavTabService } from '@services/common/nav-tab.service'
+import { ReuseStrategy } from '@services/common/reuse-strategy'
 
 /**
  * 登录模块service
@@ -26,7 +28,8 @@ export class LoginService {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private othersStore: OthersStoreService,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private navTabService: NavTabService
   ) {}
 
   /**
@@ -52,6 +55,7 @@ export class LoginService {
         if (loginAccount.rememberMe) {
           cacheUtil.setCache(Constant.CACHE_KEY_USER_INFO, resp.data)
         } else {
+          cacheUtil.setCache(Constant.CACHE_KEY_USER_INFO, resp.data, true)
           cacheUtil.deleteCache(Constant.CACHE_KEY_AUTHORIZATION)
           cacheUtil.deleteCache(Constant.CACHE_KEY_USER_INFO)
         }
@@ -94,6 +98,19 @@ export class LoginService {
     // 清除用户信息
     this.userStore.userInfo.next(undefined)
     this.userStore.token.next(undefined)
+    this.userStore.rememberMe.next(false)
+    this.othersStore.globalCollapse.next(false)
+
+    // 清除tab页内容和缓存
+    this.navTabService.clearTabs()
+    if (ReuseStrategy._cacheRouters) {
+      for (let key of Object.keys(ReuseStrategy._cacheRouters)) {
+        ReuseStrategy._cacheRouters[key].componentRef.destroy()
+      }
+      ReuseStrategy._cacheRouters = {}
+      // @ts-ignore
+      ReuseStrategy._closeRoute = this.activeRoute.snapshot['_routerState'].url
+    }
 
     // 导航到登录页
     this.router.navigateByUrl('/login')

@@ -32,7 +32,7 @@ export class ReuseStrategy implements RouteReuseStrategy {
   // 当路由离开时会触发，存储路由
   store(route: ActivatedRouteSnapshot, handle: NzSafeAny): void {
     // cache为false代表不需要缓存路由
-    if (route.data[Constant.ROUTE_DATA_CACHE_KEY] === false) {
+    if (route.data[Constant.ROUTE_DATA_CACHE_KEY] === false || !handle) {
       return
     }
     // 处理当前需要缓存的路由是否是被关闭的路由
@@ -41,7 +41,6 @@ export class ReuseStrategy implements RouteReuseStrategy {
       ReuseStrategy._closeRoute = undefined
       return
     }
-
     ReuseStrategy._cacheRouters[routeUtil.simplifyUrl(routeUtil.getCurrentUrlByActivatedRoute(route))] = handle
   }
 
