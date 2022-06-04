@@ -6,8 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { ZorroIcons } from '@shared/register-zorro-icons'
 import { QueryFormComponent } from './query-form/query-form.component'
+import { AddEditFormComponent } from '@shared/components/add-edit-form/add-edit-form.component'
 
-const components = [TableListComponent, QueryFormComponent]
+const components = [TableListComponent, QueryFormComponent, AddEditFormComponent]
 
 /**
  * 通用组件模块

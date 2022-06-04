@@ -1,5 +1,6 @@
-import { CommonTableKeyValueModel, CommonTableSearchFormModel } from '@shared/models/common.model'
+import { AddEditFormModel, CommonTableKeyValueModel, CommonTableSearchFormModel } from '@shared/models/common.model'
 import Constant from '@core/config/constant.config'
+import { Validators } from '@angular/forms'
 
 /**
  * 列表结构定义
@@ -50,5 +51,18 @@ export const queryForm: CommonTableSearchFormModel[] = [
     value: 'createAt',
     type: 'date-range',
     format: 'yyyy/MM/dd'
+  }
+]
+
+/**
+ * 新增编辑表单
+ */
+export const addEditFormConfig: AddEditFormModel[] = [
+  {
+    label: '角色名称',
+    name: 'roleName',
+    type: 'input',
+    columnCount: 1,
+    validatorOrOpts: [Validators.required, Validators.maxLength(32)]
   }
 ]

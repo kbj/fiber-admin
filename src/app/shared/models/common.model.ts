@@ -1,5 +1,6 @@
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table'
 import { NzDateMode } from 'ng-zorro-antd/date-picker'
+import { AsyncValidatorFn, FormControlOptions, ValidatorFn } from '@angular/forms'
 
 /**
  * 自定义栅格级别
@@ -35,10 +36,27 @@ export interface CommonTableKeyValueModel {
  * 通用列表搜索表单传参格式
  */
 export interface CommonTableSearchFormModel {
-  name: string
-  value: string
+  name: string // 显示名称
+  value: string // 字段名称
   type: 'input' | 'select' | 'date' | 'date-range'
   dictType?: string
   format?: string
   dateMode?: NzDateMode
+}
+
+/**
+ * 新增编辑表单配置格式
+ */
+export interface AddEditFormModel {
+  label: string // 显示名称
+  name: string // 字段名
+  value?: any // 表单回显值
+  type: 'input' | 'select' | 'date' | 'date-range'
+  format?: string
+  dateMode?: NzDateMode
+  columnCount: 1 | 2 | 3 | 4 // 每行条目数
+  hide?: boolean
+  disabled?: boolean
+  validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions | null // 校验规则
+  asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
 }

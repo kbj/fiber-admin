@@ -1,0 +1,56 @@
+<nz-modal
+  [nzVisible]="nzVisible"
+  (nzVisibleChange)="nzVisibleChange.emit($event)"
+  [nzTitle]="'新增'"
+  [nzContent]="formContent"
+  (nzOnCancel)="nzVisibleChange.emit(false)"
+  (nzOnOk)="submit()"
+>
+  <ng-template #formContent>
+    <form nz-form [formGroup]="formGroup">
+      <!-- 使用栅格适配移动端 -->
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24 }">
+        <div
+          nz-col
+          [nzXs]="24"
+          [nzSm]="24"
+          [nzMd]="24 / (config.columnCount > 1 ? 2 : 1)"
+          [nzLg]="24 / (config.columnCount > 2 ? 3 : config.columnCount > 1 ? 2 : 1)"
+          [nzXl]="24 / config.columnCount"
+          [nzXXl]="24 / config.columnCount"
+          *ngFor="let config of formConfig"
+        >
+          <!--文本输入框-->
+          <nz-form-item *ngIf="config.type === 'input'">
+            <nz-form-label [nzRequired]="checkRequired(config)">{{ config.label }}</nz-form-label>
+            <nz-form-control
+              [nzHasFeedback]="!!config.validatorOrOpts || !!config.asyncValidator"
+              [nzErrorTip]="errorTip"
+            >
+              <nz-input-group [nzSuffix]="">
+                <input
+                  nz-input
+                  [placeholder]="'请输入' + config.label"
+                  [name]="config.name"
+                  [formControlName]="config.name"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</nz-modal>
+
+<ng-template #errorTip let-control>
+  <!--必填校验-->
+  <div *ngIf="control.hasError('required')">{{ getControlLabelName(control) }}不能为空</div>
+
+  <!--最大长度校验-->
+  <div *ngIf="control.hasError('maxlength')">
+    {{ getControlLabelName(control) }}长度不能超过{{ control.errors['maxlength']['requiredLength'] }}，当前长度为：{{
+      control.errors['maxlength']['actualLength']
+    }}
+  </div>
+</ng-template>

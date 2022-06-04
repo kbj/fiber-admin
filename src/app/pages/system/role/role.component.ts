@@ -6,7 +6,9 @@ import { finalize, takeUntil } from 'rxjs'
 import pageUtil from '@utils/page.util'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { DestroyService } from '@services/common/destroy.service'
-import { queryForm, tableConfig } from './config'
+import { addEditFormConfig, queryForm, tableConfig } from './config'
+import { AddEditFormModel } from '@shared/models/common.model'
+import { Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-role',
@@ -37,6 +39,16 @@ export class RoleComponent implements OnInit {
    */
   cacheQueryFormValue: NzSafeAny = null
 
+  /**
+   * 是否展示新增/编辑框
+   */
+  showEditForm: boolean = false
+
+  /**
+   * 新增编辑表单配置
+   */
+  addEditFormConfig: AddEditFormModel[] = addEditFormConfig
+
   constructor(
     private roleService: RoleService,
     private destroy: DestroyService,
@@ -44,7 +56,10 @@ export class RoleComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const required = Validators.required
+    const validatorFn = Validators.maxLength(32)
+  }
 
   /**
    * 请求列表数据
