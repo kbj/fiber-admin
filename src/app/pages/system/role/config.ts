@@ -1,6 +1,7 @@
 import { AddEditFormModel, CommonTableKeyValueModel, CommonTableSearchFormModel } from '@shared/models/common.model'
 import Constant from '@core/config/constant.config'
 import { Validators } from '@angular/forms'
+import { MAX_LENGTH, REQUIRED } from '@shared/components/add-edit-form/form-validators-error-code'
 
 /**
  * 列表结构定义
@@ -63,6 +64,10 @@ export const addEditFormConfig: AddEditFormModel[] = [
     name: 'roleName',
     type: 'input',
     columnCount: 1,
-    validatorOrOpts: [Validators.required, Validators.maxLength(32)]
+    validatorOrOpts: [Validators.required, Validators.maxLength(32)],
+    errorMessage: {
+      [REQUIRED]: '角色名称不能为空',
+      [MAX_LENGTH]: '角色名称长度不能超过32'
+    }
   }
 ]

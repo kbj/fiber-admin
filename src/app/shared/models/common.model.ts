@@ -1,6 +1,6 @@
 import { NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table'
 import { NzDateMode } from 'ng-zorro-antd/date-picker'
-import { AsyncValidatorFn, FormControlOptions, ValidatorFn } from '@angular/forms'
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms'
 
 /**
  * 自定义栅格级别
@@ -57,6 +57,7 @@ export interface AddEditFormModel {
   columnCount: 1 | 2 | 3 | 4 // 每行条目数
   hide?: boolean
   disabled?: boolean
-  validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions | null // 校验规则
+  validatorOrOpts?: ValidatorFn[] // 校验规则
+  errorMessage?: { [key: string]: string } // 校验错误失败对应提示语
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
 }

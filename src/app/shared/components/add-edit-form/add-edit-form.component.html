@@ -43,14 +43,7 @@
   </ng-template>
 </nz-modal>
 
+<!--错误信息显示模板-->
 <ng-template #errorTip let-control>
-  <!--必填校验-->
-  <div *ngIf="control.hasError('required')">{{ getControlLabelName(control) }}不能为空</div>
-
-  <!--最大长度校验-->
-  <div *ngIf="control.hasError('maxlength')">
-    {{ getControlLabelName(control) }}长度不能超过{{ control.errors['maxlength']['requiredLength'] }}，当前长度为：{{
-      control.errors['maxlength']['actualLength']
-    }}
-  </div>
+  <div>{{ getControlErrorMessage(control) }}</div>
 </ng-template>
