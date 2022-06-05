@@ -64,10 +64,23 @@ export const addEditFormConfig: AddEditFormModel[] = [
     name: 'roleName',
     type: 'input',
     columnCount: 1,
-    validatorOrOpts: [Validators.required, Validators.maxLength(32)],
+    clearable: true,
+    validatorOrOpts: [Validators.required, Validators.maxLength(100)],
     errorMessage: {
       [REQUIRED]: '角色名称不能为空',
-      [MAX_LENGTH]: '角色名称长度不能超过32'
+      [MAX_LENGTH]: '角色名称长度不能超过100'
+    }
+  },
+  {
+    label: '角色编码',
+    name: 'roleCode',
+    type: 'input',
+    columnCount: 1,
+    clearable: true,
+    validatorOrOpts: [Validators.required, Validators.maxLength(100)],
+    errorMessage: {
+      [REQUIRED]: '角色编码不能为空',
+      [MAX_LENGTH]: '角色编码长度不能超过100'
     }
   }
 ]

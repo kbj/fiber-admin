@@ -57,6 +57,7 @@ export interface AddEditFormModel {
   columnCount: 1 | 2 | 3 | 4 // 每行条目数
   hide?: boolean
   disabled?: boolean
+  clearable?: boolean // 是否可清空
   validatorOrOpts?: ValidatorFn[] // 校验规则
   errorMessage?: { [key: string]: string } // 校验错误失败对应提示语
   asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null

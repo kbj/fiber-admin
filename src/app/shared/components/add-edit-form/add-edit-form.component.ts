@@ -35,7 +35,11 @@ export class AddEditFormComponent implements OnInit {
     this.formConfig.forEach((config) => {
       this.formGroup.addControl(
         config.name,
-        new FormControl(config.value, config.validatorOrOpts, config.asyncValidator)
+        new FormControl(
+          { value: config.value, disabled: config.disabled },
+          config.validatorOrOpts,
+          config.asyncValidator
+        )
       )
     })
   }

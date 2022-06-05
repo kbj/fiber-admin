@@ -21,19 +21,30 @@
           *ngFor="let config of formConfig"
         >
           <!--文本输入框-->
-          <nz-form-item *ngIf="config.type === 'input'">
+          <nz-form-item *ngIf="config.type === 'input'" [hidden]="config.hide">
             <nz-form-label [nzRequired]="checkRequired(config)">{{ config.label }}</nz-form-label>
             <nz-form-control
               [nzHasFeedback]="!!config.validatorOrOpts || !!config.asyncValidator"
               [nzErrorTip]="errorTip"
             >
-              <nz-input-group [nzSuffix]="">
+              <nz-input-group [nzSuffix]="inputClearTpl">
                 <input
                   nz-input
                   [placeholder]="'请输入' + config.label"
                   [name]="config.name"
                   [formControlName]="config.name"
                 />
+                <!--清空值-->
+                <ng-template #inputClearTpl>
+                  <i
+                    nz-icon
+                    class="ant-input-clear-icon"
+                    nzTheme="fill"
+                    nzType="close-circle"
+                    *ngIf="!!config.clearable && formGroup.controls[config.name].value"
+                    (click)="formGroup.controls[config.name].setValue(null)"
+                  ></i>
+                </ng-template>
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
