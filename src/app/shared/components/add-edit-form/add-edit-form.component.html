@@ -48,13 +48,30 @@
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
+
+          <!--数字输入框-->
+          <nz-form-item *ngIf="config.type === 'number'" [hidden]="config.hide">
+            <nz-form-label [nzRequired]="checkRequired(config)">{{ config.label }}</nz-form-label>
+            <nz-form-control
+              [nzHasFeedback]="!!config.validatorOrOpts || !!config.asyncValidator"
+              [nzErrorTip]="errorTip"
+            >
+              <nz-input-number
+                [formControlName]="config.name"
+                [nzPlaceHolder]="'请输入' + config.label"
+                [nzMin]="config.extra ? config.extra['nzMin'] : undefined"
+                [nzStep]="config.extra ? config.extra['nzStep'] : undefined"
+                [nzMax]="config.extra ? config.extra['nzMax'] : undefined"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!--错误信息显示模板-->
+          <ng-template #errorTip let-control>
+            <div>{{ getControlErrorMessage(control, config) }}</div>
+          </ng-template>
         </div>
       </div>
     </form>
   </ng-template>
 </nz-modal>
-
-<!--错误信息显示模板-->
-<ng-template #errorTip let-control>
-  <div>{{ getControlErrorMessage(control) }}</div>
-</ng-template>

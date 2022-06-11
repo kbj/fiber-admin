@@ -51,9 +51,8 @@ export interface AddEditFormModel {
   label: string // 显示名称
   name: string // 字段名
   value?: any // 表单回显值
-  type: 'input' | 'select' | 'date' | 'date-range'
-  format?: string
-  dateMode?: NzDateMode
+  type: 'input' | 'select' | 'date' | 'date-range' | 'number'
+  extra?: { [key: string]: any } // 一些额外的组件的设置包含
   columnCount: 1 | 2 | 3 | 4 // 每行条目数
   hide?: boolean
   disabled?: boolean

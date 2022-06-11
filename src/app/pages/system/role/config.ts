@@ -82,5 +82,13 @@ export const addEditFormConfig: AddEditFormModel[] = [
       [REQUIRED]: '角色编码不能为空',
       [MAX_LENGTH]: '角色编码长度不能超过100'
     }
+  },
+  {
+    label: '角色顺序',
+    name: 'sequence',
+    type: 'number',
+    columnCount: 1,
+    value: 0,
+    extra: { nzMin: 0, nzStep: 1 }
   }
 ]
